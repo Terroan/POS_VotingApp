@@ -2,35 +2,25 @@ package com.votingApp.server.models;
 
 import org.bson.types.ObjectId;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class VotingPostEntity {
-    private ObjectId id;
-    private List<String> votes; //-> format: "1:2" , "question:vote"
+    private HashMap<Integer, Integer> votes; //-> format: "1:2" , "question:vote"
 
     public VotingPostEntity() {
 
     }
 
-    public VotingPostEntity(ObjectId id, List<String> votes) {
-        this.id = id;
+    public VotingPostEntity(HashMap<Integer, Integer> votes) {
         this.votes = votes;
     }
 
-    public ObjectId getId() {
-        return id;
-    }
-
-    public VotingPostEntity setId(ObjectId id) {
-        this.id = id;
-        return this;
-    }
-
-    public List<String> getVotes() {
+    public HashMap<Integer, Integer> getVotes() {
         return votes;
     }
 
-    public VotingPostEntity setVotes(List<String> votes) {
+    public VotingPostEntity setVotes(HashMap<Integer, Integer> votes) {
         this.votes = votes;
         return this;
     }
@@ -38,8 +28,7 @@ public class VotingPostEntity {
     @Override
     public String toString() {
         return "VotingPost{" +
-                "id=" + id +
-                ", votes=" + votes +
+                "votes=" + votes +
                 '}';
     }
 }

@@ -2,13 +2,14 @@ package com.votingApp.server.models;
 
 import org.bson.types.ObjectId;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class VotingSessionEntity {
     private ObjectId id;
     private VoterEntity creator;
     private List<VotingQuestionEntity> questions;
-    private List<VotingPostEntity> results = null;
+    private List<VotingPostEntity> results;
 
     public VotingSessionEntity() {
 
@@ -18,6 +19,7 @@ public class VotingSessionEntity {
         this.id = id;
         this.creator = creator;
         this.questions = questions;
+        this.results = new ArrayList<>();
     }
 
     public ObjectId getId() {

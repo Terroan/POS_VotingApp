@@ -5,6 +5,8 @@ import com.votingApp.server.models.VotingSessionEntity;
 import com.votingApp.server.repositories.IVotingSessionRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class VotingSessionServiceImpl implements IVotingSessionService {
 
@@ -19,6 +21,9 @@ public class VotingSessionServiceImpl implements IVotingSessionService {
     public VotingSessionDTO read(String id) {
         return new VotingSessionDTO(votingSessionRepository.read(id));
     }
+
+    @Override
+    public List<VotingSessionDTO> readAll() { return votingSessionRepository.readAll().stream().map(VotingSessionDTO::new).toList(); }
 
     @Override
     public void delete(String id) { votingSessionRepository.delete(id); }

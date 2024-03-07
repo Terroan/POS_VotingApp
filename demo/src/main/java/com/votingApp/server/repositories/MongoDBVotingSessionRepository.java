@@ -12,6 +12,9 @@ import jakarta.annotation.PostConstruct;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.ReturnDocument.AFTER;
 
@@ -47,6 +50,11 @@ public class MongoDBVotingSessionRepository implements IVotingSessionRepository 
     @Override
     public VotingSessionEntity read(String id) {
         return votingSessionCollection.find(eq("_id", new ObjectId(id))).first();
+    }
+
+    @Override
+    public List<VotingSessionEntity> readAll() {
+        return votingSessionCollection.find().into(new ArrayList<>());
     }
 
     @Override

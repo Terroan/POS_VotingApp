@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class VotingSessionController {
@@ -31,6 +33,11 @@ public class VotingSessionController {
         VotingSessionDTO votingSessionDTO = votingSessionService.read(id);
         if (votingSessionDTO == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         return ResponseEntity.ok(votingSessionDTO);
+    }
+
+    @GetMapping("sessions")
+    public List<VotingSessionDTO> readVotingSessions() {
+        return votingSessionService.readAll();
     }
 
     @DeleteMapping("session/{id}")

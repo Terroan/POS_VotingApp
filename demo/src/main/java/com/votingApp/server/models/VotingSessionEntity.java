@@ -7,6 +7,7 @@ import java.util.List;
 
 public class VotingSessionEntity {
     private ObjectId id;
+    private String sessionID;
     private VoterEntity creator;
     private List<VotingQuestionEntity> questions;
     private List<VotingPostEntity> results;
@@ -29,6 +30,14 @@ public class VotingSessionEntity {
     public VotingSessionEntity setId(ObjectId id) {
         this.id = id;
         return this;
+    }
+
+    public String getSessionID() {
+        return sessionID;
+    }
+
+    public void setSessionID(String sessionID) {
+        this.sessionID = sessionID;
     }
 
     public VoterEntity getCreator() {
@@ -56,15 +65,5 @@ public class VotingSessionEntity {
     public VotingSessionEntity setResults(List<VotingPostEntity> results) {
         this.results = results;
         return this;
-    }
-
-    @Override
-    public String toString() {
-        return "VotingSession{" +
-                "id=" + id +
-                ", creator=" + creator +
-                ", questions=" + questions +
-                ", results=" + results +
-                '}';
     }
 }

@@ -5,6 +5,7 @@ import org.bson.types.ObjectId;
 import java.util.List;
 
 public class VotingQuestionEntity {
+
     private String question;
     private List<String> options;
 
@@ -12,7 +13,7 @@ public class VotingQuestionEntity {
 
     }
 
-    public VotingQuestionEntity(String question,List<String> options) {
+    public VotingQuestionEntity(String question, List<String> options) {
         this.question = question;
         this.options = options;
     }

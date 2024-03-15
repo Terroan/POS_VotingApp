@@ -1,0 +1,33 @@
+﻿<Page x:Class="VotingApp.CreateSurveyPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="CreateSurveyPage">
+    <Grid Margin="20" Height="237" Width="580">
+        <!-- Header -->
+        <TextBlock Text="Umfrage erstellen" FontSize="24" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+        <!-- Name des Erstellers -->
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBlock Text="Name des Erstellers:" VerticalAlignment="Center"/>
+            <TextBox x:Name="CreatorNameTextBox" Margin="10,0,0,0" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <!-- Titel der Umfrage -->
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBlock Text="Titel der Umfrage:" VerticalAlignment="Center"/>
+            <TextBox x:Name="SurveyTitleTextBox" Margin="10,0,0,0" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <!-- Fragen und Antwortmöglichkeiten -->
+        <TextBlock Text="Fragen und Antwortmöglichkeiten:" Margin="0,0,0,10"/>
+        <StackPanel x:Name="QuestionsStackPanel" Margin="0,0,0,10">
+            <!-- Hier können dynamisch Frage- und Antwortfelder hinzugefügt werden -->
+        </StackPanel>
+
+        <!-- Button zum Hinzufügen einer Frage -->
+        <Button Content="Frage hinzufügen" Click="AddQuestionButton_Click" Margin="0,0,0,10"/>
+
+        <!-- Button zum Erstellen der Session -->
+        <Button Content="Session erstellen" Click="CreateSessionButton_Click" HorizontalAlignment="Center"/>
+    </Grid>
+</Page>

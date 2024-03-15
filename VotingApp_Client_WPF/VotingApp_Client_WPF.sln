@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VotingApp_Client_WPF", "VotingApp_Client_WPF.csproj", "{8D2065BB-EBAF-4113-890E-E375984AFF77}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8D2065BB-EBAF-4113-890E-E375984AFF77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D2065BB-EBAF-4113-890E-E375984AFF77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D2065BB-EBAF-4113-890E-E375984AFF77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D2065BB-EBAF-4113-890E-E375984AFF77}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {832D39B2-BB06-48EA-8660-629FBE60732C}
+	EndGlobalSection
+EndGlobal

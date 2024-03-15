@@ -8,15 +8,15 @@ import java.util.List;
 public interface IVotingSessionRepository {
     VotingSessionEntity create(VotingSessionEntity votingSessionEntity);
 
-    VotingSessionEntity read(String id);
+    VotingSessionEntity read(String sessionID);
 
     List<VotingSessionEntity> readAll();
 
-    VotingSessionEntity update(VotingSessionEntity votingSessionEntity);
+    VotingSessionEntity update(String sessionID, VotingSessionEntity votingSessionEntity, boolean results);
 
-    Long delete(String id);
+    Long delete(String sessionID);
 
     Long deleteAll();
 
-    VotingPostDTO postResults(String id, VotingPostDTO votingPostDTO);
+    VotingPostDTO postResults(String sessionID, VotingPostDTO votingPostDTO);
 }

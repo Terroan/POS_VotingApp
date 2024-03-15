@@ -56,8 +56,8 @@ public class MongoDBVotingSessionRepository implements IVotingSessionRepository 
     }
 
     @Override
-    public VotingSessionEntity read(String id) {
-        return votingSessionCollection.find(eq("sessionID", id)).first();
+    public VotingSessionEntity read(String sessionID) {
+        return votingSessionCollection.find(eq("sessionID", sessionID)).first();
     }
 
     @Override
@@ -73,16 +73,26 @@ public class MongoDBVotingSessionRepository implements IVotingSessionRepository 
 
 
     @Override
-    public VotingSessionEntity update(VotingSessionEntity votingSessionEntity) {
+    public VotingSessionEntity update(String sessionID, VotingSessionEntity votingSessionEntity, boolean results) {
         FindOneAndReplaceOptions options = new FindOneAndReplaceOptions().returnDocument(AFTER);
-        return votingSessionCollection.findOneAndReplace(eq("_id", votingSessionEntity.getId()), votingSessionEntity, options);
+        if(results)
+            votingSessionEntity.setSessionID(sessionID);
+        else
+        {
+            String tmp = getNewSessionID();
+            while(read(tmp) != null)
+                sessionID = getNewSessionID();
+            votingSessionEntity.setSessionID(tmp);
+        }
+        votingSessionEntity.setId(read(sessionID).getId());
+        return votingSessionCollection.findOneAndReplace(eq("sessionID", sessionID), votingSessionEntity, options);
     }
 
     @Override
-    public VotingPostDTO postResults(String id, VotingPostDTO votingPostDTO) {
-        VotingSessionEntity vse = read(id);
+    public VotingPostDTO postResults(String sessionID, VotingPostDTO votingPostDTO) {
+        VotingSessionEntity vse = read(sessionID);
         vse.getResults().add(votingPostDTO.toVotingPostEntity());
-        update(vse);
+        update(sessionID, vse, true);
         return votingPostDTO;
     }
 

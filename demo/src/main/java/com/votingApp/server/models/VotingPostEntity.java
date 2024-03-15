@@ -5,13 +5,13 @@ import java.util.HashMap;
 public class VotingPostEntity {
 
     private VoterEntity voter;
-    private HashMap<Integer, Integer> votes; //-> format: "1:2" , "question:vote"
+    private HashMap<String, Integer> votes; //-> format: "1:2" , "question:vote"
 
     public VotingPostEntity() {
 
     }
 
-    public VotingPostEntity(VoterEntity voter, HashMap<Integer, Integer> votes) {
+    public VotingPostEntity(VoterEntity voter, HashMap<String, Integer> votes) {
         this.voter = voter;
         this.votes = votes;
     }
@@ -24,11 +24,11 @@ public class VotingPostEntity {
         this.voter = voter;
     }
 
-    public HashMap<Integer, Integer> getVotes() {
+    public HashMap<String, Integer> getVotes() {
         return votes;
     }
 
-    public VotingPostEntity setVotes(HashMap<Integer, Integer> votes) {
+    public VotingPostEntity setVotes(HashMap<String, Integer> votes) {
         this.votes = votes;
         return this;
     }

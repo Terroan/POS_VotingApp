@@ -21,11 +21,4 @@ public record VotingSessionDTO(
                 vse.getQuestions().stream().map(VotingQuestionDTO::new).toList(),
                 (vse.getResults() == null ? new ArrayList<>() : vse.getResults().stream().map(VotingPostDTO::new).toList()));
     }
-
-    public VotingSessionEntity toVotingSessionEntity() {
-        ObjectId _id = id == null ? new ObjectId() : new ObjectId(id);
-        return new VotingSessionEntity(_id,
-                creator.toVoterEntity(),
-                questions.stream().map(VotingQuestionDTO::toVotingQuestionEntity).toList());
-    }
 }

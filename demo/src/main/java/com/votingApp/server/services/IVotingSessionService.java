@@ -9,18 +9,18 @@ import java.util.List;
 
 public interface IVotingSessionService {
 
-    boolean checkPassword(String id, String password);
+    boolean checkPassword(String sessionID, String password);
     VotingSessionDTO create(VotingSessionWithPasswordDTO votingSessionWithPasswordDTO);
 
-    VotingSessionDTO read(String id);
+    VotingSessionDTO read(String sessionID);
 
     List<VotingSessionDTO> readAll();
 
-    VotingSessionDTO update(VotingSessionDTO votingSessionDTO);
+    VotingSessionDTO update(String sessionID, VotingSessionWithPasswordDTO votingSessionWithPasswordDTO);
 
-    Long delete(String id);
+    Long delete(String sessionID);
 
     Long deleteAll();
 
-    VotingPostDTO postResults(String id, VotingPostDTO votingPostDTO);
+    VotingPostDTO postResults(String sessionID, VotingPostDTO votingPostDTO);
 }

@@ -10,7 +10,7 @@ import java.util.HashMap;
 public record VotingPostDTO(
 
         VoterEntity voter,
-        HashMap<Integer, Integer> votes) {
+        HashMap<String, Integer> votes) {
 
     public VotingPostDTO(VotingPostEntity vpe) {
         this(vpe.getVoter(), vpe.getVotes());

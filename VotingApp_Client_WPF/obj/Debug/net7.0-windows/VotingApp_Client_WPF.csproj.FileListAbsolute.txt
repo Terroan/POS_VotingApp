@@ -17,3 +17,6 @@ C:\Users\Daniel\Desktop\GitHubClones\POS_VotingApp\VotingApp_Client_WPF\obj\Debu
 C:\Users\Daniel\Desktop\GitHubClones\POS_VotingApp\VotingApp_Client_WPF\obj\Debug\net7.0-windows\VotingApp_Client_WPF.pdb
 C:\Users\Daniel\Desktop\GitHubClones\POS_VotingApp\VotingApp_Client_WPF\obj\Debug\net7.0-windows\VotingApp_Client_WPF.genruntimeconfig.cache
 C:\Users\Daniel\Desktop\GitHubClones\POS_VotingApp\VotingApp_Client_WPF\obj\Debug\net7.0-windows\ref\VotingApp_Client_WPF.dll
+C:\Users\Daniel\Desktop\GitHubClones\POS_VotingApp\VotingApp_Client_WPF\obj\Debug\net7.0-windows\CreateSessionPage.g.cs
+C:\Users\Daniel\Desktop\GitHubClones\POS_VotingApp\VotingApp_Client_WPF\obj\Debug\net7.0-windows\VotingApp_Client_WPF_MarkupCompile.lref
+C:\Users\Daniel\Desktop\GitHubClones\POS_VotingApp\VotingApp_Client_WPF\obj\Debug\net7.0-windows\CreateSessionPage.baml

@@ -24,5 +24,11 @@ namespace VotingApp_Client_WPF
         {
             InitializeComponent();
         }
+
+        //Switch to createSessionPage
+        private void btnCreateSession_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new CreateSessionPage());
+        }
     }
 }

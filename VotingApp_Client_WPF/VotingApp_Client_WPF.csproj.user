@@ -10,18 +10,12 @@
     <Compile Update="CreateSessionPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="StartPage.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="CreateSessionPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="StartPage.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

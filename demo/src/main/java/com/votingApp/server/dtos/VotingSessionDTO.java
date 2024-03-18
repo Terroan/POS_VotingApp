@@ -12,12 +12,13 @@ import java.util.List;
 public record VotingSessionDTO(
         String id,
         String sessionID,
+        String title,
         VoterDTO creator,
         List<VotingQuestionDTO> questions,
         List<VotingPostDTO> results) {
 
     public VotingSessionDTO(VotingSessionEntity vse) {
-        this(vse.getId() == null ? new ObjectId().toHexString() : vse.getId().toHexString(), vse.getSessionID(), new VoterDTO(vse.getCreator()),
+        this(vse.getId() == null ? new ObjectId().toHexString() : vse.getId().toHexString(), vse.getSessionID(), vse.getSessionTitle(), new VoterDTO(vse.getCreator()),
                 vse.getQuestions().stream().map(VotingQuestionDTO::new).toList(),
                 (vse.getResults() == null ? new ArrayList<>() : vse.getResults().stream().map(VotingPostDTO::new).toList()));
     }

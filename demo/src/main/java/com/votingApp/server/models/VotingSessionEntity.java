@@ -8,6 +8,7 @@ import java.util.List;
 public class VotingSessionEntity {
     private ObjectId id;
     private String sessionID;
+    private String sessionTitle;
     private VoterEntity creator;
     private List<VotingQuestionEntity> questions;
     private List<VotingPostEntity> results;
@@ -16,8 +17,9 @@ public class VotingSessionEntity {
 
     }
 
-    public VotingSessionEntity(ObjectId id, VoterEntity creator, List<VotingQuestionEntity> questions) {
+    public VotingSessionEntity(ObjectId id, String sessionTitle, VoterEntity creator, List<VotingQuestionEntity> questions) {
         this.id = id;
+        this.sessionTitle = sessionTitle;
         this.creator = creator;
         this.questions = questions;
         this.results = new ArrayList<>();
@@ -38,6 +40,14 @@ public class VotingSessionEntity {
 
     public void setSessionID(String sessionID) {
         this.sessionID = sessionID;
+    }
+
+    public String getSessionTitle() {
+        return sessionTitle;
+    }
+
+    public void setSessionTitle(String sessionTitle) {
+        this.sessionTitle = sessionTitle;
     }
 
     public VoterEntity getCreator() {

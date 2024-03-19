@@ -14,12 +14,14 @@ namespace VotingApp_Client_WPF
         private List<VotingQuestion?>? _questions = new();
         private string? _password;
 
+        public VotingSession() { }
+
         [JsonPropertyName("title")]
         public string? SessionTitle { get { return _sessionTitle; } set { _sessionTitle = value; } }
         [JsonPropertyName("creator")]
-        public VotingSessionCreator? Creator { get { return _creator; } }
+        public VotingSessionCreator? Creator { get { return _creator; } set { _creator = value; } }
         [JsonPropertyName("questions")]
-        public List<VotingQuestion?>? Questions { get { return _questions; } }
+        public List<VotingQuestion?>? Questions { get { return _questions; } set { _questions = value; } }
         [JsonPropertyName("password")]
         public string? Password {  get { return _password; } set { _password = value; } }
     }

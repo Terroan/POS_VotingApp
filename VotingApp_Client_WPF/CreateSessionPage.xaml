@@ -6,11 +6,12 @@
       xmlns:local="clr-namespace:VotingApp_Client_WPF"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="CreateSessionPage">
+      Title="Create Session"
+      Background="#FFD27EB0"
+      FontFamily="Showcard Gothic">
 
-    <Grid Background="LightGray">
+    <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -21,24 +22,41 @@
         </Grid.RowDefinitions>
 
         <!-- Labels und Textboxen für Session- und Creator-Namen -->
-        <Label Content="Session name:" Grid.Column="0" Grid.Row="0" Margin="10"/>
-        <Label Grid.Column="1" Content="Session password:" VerticalAlignment="Center" HorizontalAlignment="Right" Width="496"/>
-        <Label Content="Creator name:" Grid.Column="0" Grid.Row="1" Margin="10"/>
-        <TextBox x:Name="tbCreatorName" TextWrapping="Wrap" Text="" Grid.Column="1" Grid.Row="1" Margin="10,10,196,10"/>
-        <TextBox x:Name="tbSessionName" TextWrapping="Wrap" Text="" Grid.Column="1" Grid.Row="0" Margin="10,10,515,10"/>
-        <TextBox x:Name="tbSessionPassword" TextWrapping="Wrap" Text="" Grid.Column="1" Grid.Row="0" Margin="307,10,218,10"/>
+
+
 
         <!-- Button zum Erstellen der Session -->
-        <Button x:Name="btnCreateSession" Content="Create Session" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" Margin="0,12,72,16" Grid.RowSpan="2" Width="114" Click="btnCreateSession_Click"/>
-
-        <!-- GroupBox für Fragen -->
-        <GroupBox x:Name="gbQuestions" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Header="Questions" Margin="10">
+        <GroupBox Header="Information">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <ListView x:Name="lvQuestions" Grid.Row="0" Margin="10" SelectionChanged="lvQuestions_SelectionChanged">
+                <Label Content="Creator name:" Grid.Column="0" Grid.Row="0" Margin="10"/>
+                <Label Content="Session password:" VerticalAlignment="Center" HorizontalAlignment="Left" Width="128" Margin="296,0,0,0"/>
+                <Label Content="Session title:" Grid.Column="0" Grid.Row="1" Margin="10"/>
+
+                <TextBox x:Name="tbSessionName" TextWrapping="Wrap" Text="" Grid.Row="1" Margin="115,10,196,10" Background="#33EA0404" BorderBrush="#FF090A0E" />
+                <TextBox x:Name="tbCreatorName" TextWrapping="Wrap" Text="" Grid.Row="0" Margin="115,10,497,10" Background="#33EA0404" BorderBrush="#FF090A0E"/>
+                <TextBox x:Name="tbSessionPassword" TextWrapping="Wrap" Text="" Grid.Row="0" Margin="424,10,196,10" Background="#33EA0404" BorderBrush="#FF090A0E"/>
+                <Button x:Name="btnCreateSession" Content="Create Session" Grid.Row="0" HorizontalAlignment="Right" Margin="0,14,65,14" Grid.RowSpan="2" Width="114" Click="btnCreateSession_Click" Background="#6629F90B"/>
+            </Grid>
+        </GroupBox>
+
+        <!-- GroupBox für Fragen -->
+        <GroupBox x:Name="gbQuestions" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Header="Questions" Margin="10" Visibility="Visible">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <ListView x:Name="lvQuestions" Grid.Row="0" Margin="10" SelectionChanged="lvQuestions_SelectionChanged"
+                          Background="#FFDCD267">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}">
+                            <EventSetter Event="MouseDoubleClick" Handler="ListViewItem_DoubleClick"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
                     <ListView.View>
                         <GridView>
                             <GridViewColumn/>
@@ -46,8 +64,9 @@
                     </ListView.View>
                 </ListView>
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button x:Name="btnAddQuestion" Content="Add question" Margin="10" Click="btnAddQuestion_Click"/>
-                    <Button x:Name="btnDeleteQuestion" Content="Remove question" Margin="10" Click="btnDeleteQuestion_Click" IsEnabled="False"/>
+                    <Button x:Name="btnAddQuestion" Content="Add question" Margin="10" Height="30" Click="btnAddQuestion_Click" Width="90" Background="#6629F90B"
+/>
+                    <Button x:Name="btnDeleteQuestion" Content="Remove question" Margin="10" Click="btnDeleteQuestion_Click" IsEnabled="False" Width="120" Background="#66ED2929"/>
                 </StackPanel>
             </Grid>
         </GroupBox>
@@ -59,7 +78,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <ListView x:Name="lvOptions" Grid.Row="0" Margin="10" SelectionChanged="lvQuestions_SelectionChanged">
+                <ListView x:Name="lvOptions" Grid.Row="0" Margin="10" SelectionChanged="lvQuestions_SelectionChanged" Background="#FFDCD267">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn/>
@@ -67,14 +86,15 @@
                     </ListView.View>
                 </ListView>
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button x:Name="btnAddOption" Content="Add option" Margin="10" Click="btnAddOption_Click"/>
-                    <Button x:Name="btnDeleteOption" Content="Remove option" Margin="10" Click="btnDeleteOption_Click" IsEnabled="False"/>
-                    <Button x:Name="btnOptionGoBack" Content="Go back" Margin="10" Click="btnOptionGoBack_Click"/>
+                    <Button x:Name="btnAddOption" Content="Add option" Margin="10" Click="btnAddOption_Click" Background="#6629F90B" Height="30"/>
+                    <Button x:Name="btnDeleteOption" Content="Remove option" Margin="10" Click="btnDeleteOption_Click" IsEnabled="False" Background="#66ED2929"/>
+                    <Button x:Name="btnOptionGoBack" Content="Go back" Margin="10" Click="btnOptionGoBack_Click" Background="#FFBDAEBC"/>
                 </StackPanel>
             </Grid>
         </GroupBox>
 
         <!-- Button zum Zurückkehren zum Start -->
-        <Button x:Name="btnGoBackToStart" Content="Go back" Grid.Column="1" HorizontalAlignment="Right" Margin="0,10,10,10" Grid.Row="0" Click="btnGoBackToStart_Click"/>
+        <Button x:Name="btnGoBackToStart" Content="Go back" HorizontalAlignment="Right" Margin="0,17,10,61" Grid.Row="0" Click="btnGoBackToStart_Click" Background="#FFBDAEBC"/>
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden"/>
     </Grid>
 </Page>

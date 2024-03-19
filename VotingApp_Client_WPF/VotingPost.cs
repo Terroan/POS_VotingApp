@@ -12,6 +12,8 @@ namespace VotingApp_Client_WPF
         private Voter? _voter;
         private Dictionary<string, int>? _votes;
 
+        public VotingPost() { }
+
         [JsonPropertyName("voter")]
         public Voter? Voter { get { return _voter; } set { _voter = value; } }
         [JsonPropertyName("votes")]

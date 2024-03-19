@@ -20,3 +20,11 @@ C:\Users\Daniel\Desktop\GitHubClones\POS_VotingApp\VotingApp_Client_WPF\obj\Debu
 C:\Users\Daniel\Desktop\GitHubClones\POS_VotingApp\VotingApp_Client_WPF\obj\Debug\net7.0-windows\CreateSessionPage.g.cs
 C:\Users\Daniel\Desktop\GitHubClones\POS_VotingApp\VotingApp_Client_WPF\obj\Debug\net7.0-windows\VotingApp_Client_WPF_MarkupCompile.lref
 C:\Users\Daniel\Desktop\GitHubClones\POS_VotingApp\VotingApp_Client_WPF\obj\Debug\net7.0-windows\CreateSessionPage.baml
+C:\Users\Daniel\Desktop\GitHubClones\POS_VotingApp\VotingApp_Client_WPF\obj\Debug\net7.0-windows\ResultPage.g.cs
+C:\Users\Daniel\Desktop\GitHubClones\POS_VotingApp\VotingApp_Client_WPF\obj\Debug\net7.0-windows\SessionCodePage.g.cs
+C:\Users\Daniel\Desktop\GitHubClones\POS_VotingApp\VotingApp_Client_WPF\obj\Debug\net7.0-windows\ResultPage.baml
+C:\Users\Daniel\Desktop\GitHubClones\POS_VotingApp\VotingApp_Client_WPF\obj\Debug\net7.0-windows\SessionCodePage.baml
+C:\Users\Daniel\Desktop\GitHubClones\POS_VotingApp\VotingApp_Client_WPF\obj\Debug\net7.0-windows\VotingApp_Client_WPF.csproj.AssemblyReference.cache
+C:\Users\Daniel\Desktop\GitHubClones\POS_VotingApp\VotingApp_Client_WPF\bin\Debug\net7.0-windows\LiveCharts.dll
+C:\Users\Daniel\Desktop\GitHubClones\POS_VotingApp\VotingApp_Client_WPF\bin\Debug\net7.0-windows\LiveCharts.Wpf.dll
+C:\Users\Daniel\Desktop\GitHubClones\POS_VotingApp\VotingApp_Client_WPF\obj\Debug\net7.0-windows\VotingApp_Client_WPF.csproj.CopyComplete

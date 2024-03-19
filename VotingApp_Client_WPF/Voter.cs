@@ -11,6 +11,8 @@ namespace VotingApp_Client_WPF
     {
         private string? _name;
 
+        public Voter() { }
+
         [JsonPropertyName("name")]
         public string? Name { get { return _name; } set {  _name = value; } }
     }

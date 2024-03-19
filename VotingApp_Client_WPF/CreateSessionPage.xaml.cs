@@ -33,8 +33,10 @@ namespace VotingApp_Client_WPF
         {
             _session?.Questions?.Add(new VotingQuestion());
             TextBox tmp = new();
-            tmp.TextChanged += tbQuestion_TextChanged;
+            tmp.Width = 300;
+            tmp.Height = 25;
             tmp.GotFocus += tbQuestion_GotFocus;
+            tmp.LostFocus += tbQuestion_LostFocus;
             lvQuestions.Items.Add(tmp);
         }
 
@@ -49,15 +51,10 @@ namespace VotingApp_Client_WPF
             if (lvQuestions.SelectedIndex != -1)
             {
                 btnDeleteQuestion.IsEnabled = true;
-                gbQuestions.Visibility = Visibility.Hidden;
-                gbOptions.Visibility = Visibility.Visible;
-                ShowOptions(lvQuestions.SelectedIndex);
             }
             else
             {
                 btnDeleteQuestion.IsEnabled = false;
-                gbQuestions.Visibility = Visibility.Visible;
-                gbOptions.Visibility = Visibility.Hidden;
             }
         }
 
@@ -65,8 +62,10 @@ namespace VotingApp_Client_WPF
         {
             _session?.Questions?[lvQuestions.SelectedIndex]?.Options?.Add("");
             TextBox tmp = new();
-            tmp.TextChanged += tbOption_TextChanged;
+            tmp.Width = 300;
+            tmp.Height = 25;
             tmp.GotFocus += tbOption_GotFocus;
+            tmp.LostFocus += tbOption_LostFocus;
             lvOptions.Items.Add(tmp);
         }
 
@@ -89,7 +88,7 @@ namespace VotingApp_Client_WPF
             }
         }
 
-        private void tbQuestion_TextChanged(object sender, TextChangedEventArgs e)
+        private void tbQuestion_LostFocus(object sender, RoutedEventArgs e)
         {
             TextBox question = (TextBox)sender;
             if (question.Text == null)
@@ -97,7 +96,13 @@ namespace VotingApp_Client_WPF
             _session.Questions[lvQuestions.SelectedIndex].Question = question.Text;
         }
 
-        private void tbOption_TextChanged(object sender, TextChangedEventArgs e)
+        private void tbQuestion_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox question = (TextBox)sender;
+            lvQuestions.SelectedIndex = lvQuestions.Items.IndexOf(question);
+        }
+
+        private void tbOption_LostFocus(object sender, RoutedEventArgs e)
         {
             TextBox option = (TextBox)sender;
             if (option.Text == null)
@@ -105,16 +110,12 @@ namespace VotingApp_Client_WPF
             _session.Questions[lvQuestions.SelectedIndex].Options[lvOptions.SelectedIndex] = option.Text;
         }
 
-        private void tbQuestion_GotFocus(object sender, RoutedEventArgs e)
-        {
-            lvQuestions.SelectedIndex = lvQuestions.Items.IndexOf((TextBox)sender);
-        }
-
         private void tbOption_GotFocus(object sender, RoutedEventArgs e)
         {
-            lvOptions.SelectedIndex = lvOptions.Items.IndexOf((TextBox)sender);
+            TextBox option = (TextBox)sender;
+            lvOptions.SelectedIndex = lvOptions.Items.IndexOf(option);
         }
-        
+
         private void ShowOptions(int questionIndex)
         {
             lvOptions.Items.Clear();
@@ -122,8 +123,7 @@ namespace VotingApp_Client_WPF
             {
                 TextBox tmp = new();
                 tmp.Text = s;
-                tmp.TextChanged += tbOption_TextChanged;
-                tmp.GotFocus += tbOption_GotFocus;
+                tmp.LostFocus += tbOption_LostFocus;
                 lvOptions.Items.Add(tmp);
             }
         }
@@ -141,6 +141,11 @@ namespace VotingApp_Client_WPF
 
         private async void btnCreateSession_Click(object sender, RoutedEventArgs e)
         {
+            if (tbSessionName.Text == string.Empty || tbSessionPassword.Text == string.Empty || tbCreatorName.Text == string.Empty)
+            {
+                ShowInformationMessage("Please fill out all forms!");
+                return;
+            }
             try
             {
                 _session.SessionTitle = tbSessionName.Text;
@@ -157,21 +162,35 @@ namespace VotingApp_Client_WPF
                     // Überprüfen der Antwort auf Erfolg
                     if (response.IsSuccessStatusCode)
                     {
-                        MessageBox.Show("Session erstellt");
-                        VontingSessionIngress? tmp = JsonSerializer.Deserialize<VontingSessionIngress?>(response.Content.ReadAsStream());
-                        MessageBox.Show(tmp.SessionID);
-                        //load waiting page
+                        MainFrame.Navigate(new SessionCodePage(JsonSerializer.Deserialize<VontingSessionIngress?>(response.Content.ReadAsStream()).SessionID));  
                     }
                     else
                     {
-                        MessageBox.Show("Fehler! Statuscode: " + response.StatusCode);
+                        ShowErrorMessage("Fehler! Statuscode: " + response.StatusCode);
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Fehler: " + ex.Message);
+                ShowErrorMessage(ex.Message);
             }
+        }
+
+        private void ShowInformationMessage(string msg)
+        {
+            MessageBox.Show(msg, System.Reflection.Assembly.GetEntryAssembly().GetName().Name, MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void ShowErrorMessage(string msg)
+        {
+            MessageBox.Show(msg, System.Reflection.Assembly.GetEntryAssembly().GetName().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+        private void ListViewItem_DoubleClick(object sender, MouseEventArgs e)
+        {
+            gbQuestions.Visibility = Visibility.Hidden;
+            gbOptions.Visibility = Visibility.Visible;
+            ShowOptions(lvQuestions.SelectedIndex);
         }
     }
 }

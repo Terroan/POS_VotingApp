@@ -8,6 +8,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.FindOneAndReplaceOptions;
 import com.votingApp.server.dtos.VotingPostDTO;
+import com.votingApp.server.models.VoterEntity;
 import com.votingApp.server.models.VotingPostEntity;
 import com.votingApp.server.models.VotingSessionEntity;
 import jakarta.annotation.PostConstruct;
@@ -16,6 +17,7 @@ import org.bson.types.ObjectId;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -51,6 +53,11 @@ public class MongoDBVotingSessionRepository implements IVotingSessionRepository 
         while(read(sessionID) != null)
             sessionID = getNewSessionID();
         votingSessionEntity.setSessionID(sessionID);
+        votingSessionEntity.getResults().add(new VotingPostEntity(new VoterEntity("Daniel"), new HashMap<String, Integer>() {{
+            put("1", 1);
+            put("2",2);
+            put("3",3);
+        }}));
         votingSessionCollection.insertOne(votingSessionEntity);
         return votingSessionEntity;
     }

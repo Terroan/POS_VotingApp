@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET7_0;NETCOREAPP
 C:\Users\Daniel\Desktop\GitHubClones\POS_VotingApp\VotingApp_Client_WPF\App.xaml
-2-877384611
+4-361133635
 
-12-663313153
-198-759771931
-CreateSessionPage.xaml;MainWindow.xaml;
+14-804268840
+2001359871920
+CreateSessionPage.xaml;MainWindow.xaml;ResultPage.xaml;SessionCodePage.xaml;
 
-False
+True
 

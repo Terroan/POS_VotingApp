@@ -33,6 +33,7 @@ public class VotingSessionController {
             return ResponseEntity.ok(votingSessionService.create(votingSessionWithPasswordDTO));
         }
         catch(Exception e) {
+            System.out.println(e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }

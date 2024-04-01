@@ -16,6 +16,9 @@
     <Compile Update="SessionCodePage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="SessionFormPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="CreateSessionPage.xaml">
@@ -28,6 +31,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="SessionCodePage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="SessionFormPage.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

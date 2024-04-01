@@ -3,17 +3,33 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:local="clr-namespace:VotingApp_Client_WPF"
       xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
-      Title="Survey Statistics">
-    <Grid Background="LightGray" Height="455" Width="635">
+      Title="Statistics"
+      Background="#FFD27EB0"
+      FontFamily="Showcard Gothic"
+      FontSize="20">
+
+    <Grid VerticalAlignment="Center"
+          HorizontalAlignment="Center">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+
         </Grid.RowDefinitions>
 
-        <ComboBox x:Name="cmbQuestions" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,61,0,0" SelectedIndex="0">
-            <!-- Fügen Sie hier die Einträge für die Fragen hinzu -->
-        </ComboBox>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-        <lvc:CartesianChart x:Name="lvcChart" Grid.Row="1" Margin="10,138,10,10"/>
+        <Label x:Name="lblCreator" Content="Creator:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" MinWidth="100"/>
+
+        <Label x:Name="lblSurvey" Content="Survey:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" MinWidth="100"/>
+
+        <ComboBox x:Name="cbQuestions" SelectedIndex="0" Grid.Row="0" Grid.Column="0" Margin="10,75,10,10" SelectionChanged="cbQuestions_SelectionChanged"/>
+
+        <Label x:Name="lblQuestion" Content="What is the equivalent of happiness?" Grid.Column="2" Grid.Row="0" VerticalAlignment="Bottom" Margin="10"/>
+
+        <lvc:CartesianChart x:Name="lvcChart" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="10"/>
     </Grid>
 </Page>

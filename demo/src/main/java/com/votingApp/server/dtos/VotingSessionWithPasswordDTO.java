@@ -18,6 +18,6 @@ public record VotingSessionWithPasswordDTO(
         return new VotingSessionEntity(_id,
                 title,
                 creator.toVoterEntity(),
-                questions.stream().map(VotingQuestionDTO::toVotingQuestionEntity).toList());
+                new ArrayList<>(questions.stream().map(VotingQuestionDTO::toVotingQuestionEntity).toList()));
     }
 }

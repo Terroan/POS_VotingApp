@@ -123,6 +123,7 @@ namespace VotingApp_Client_WPF
             {
                 TextBox tmp = new();
                 tmp.Text = s;
+                tmp.Width = 100;
                 tmp.LostFocus += tbOption_LostFocus;
                 lvOptions.Items.Add(tmp);
             }
@@ -146,6 +147,8 @@ namespace VotingApp_Client_WPF
                 ShowInformationMessage("Please fill out all forms!");
                 return;
             }
+
+            btnCreateSession.IsEnabled = false; // create session only once
             try
             {
                 _session.SessionTitle = tbSessionName.Text;
@@ -155,7 +158,6 @@ namespace VotingApp_Client_WPF
                 // Erstellen einer HttpClient-Instanz
                 using (HttpClient client = new HttpClient())
                 {
-                    MessageBox.Show(JsonSerializer.Serialize(_session));
                     // Senden der POST-Anfrage
                     HttpResponseMessage response = await client.PostAsync("http://localhost:5000/api/session", new StringContent(JsonSerializer.Serialize(_session), Encoding.UTF8, "application/json"));
 
@@ -173,6 +175,7 @@ namespace VotingApp_Client_WPF
             catch (Exception ex)
             {
                 ShowErrorMessage(ex.Message);
+                btnCreateSession.IsEnabled = true;
             }
         }
 

@@ -10,6 +10,7 @@ import com.mongodb.client.model.FindOneAndReplaceOptions;
 import com.votingApp.server.dtos.VotingPostDTO;
 import com.votingApp.server.models.VoterEntity;
 import com.votingApp.server.models.VotingPostEntity;
+import com.votingApp.server.models.VotingQuestionEntity;
 import com.votingApp.server.models.VotingSessionEntity;
 import jakarta.annotation.PostConstruct;
 import org.bson.Document;
@@ -53,10 +54,29 @@ public class MongoDBVotingSessionRepository implements IVotingSessionRepository 
         while(read(sessionID) != null)
             sessionID = getNewSessionID();
         votingSessionEntity.setSessionID(sessionID);
+
+        votingSessionEntity.getQuestions().add( new VotingQuestionEntity());
+        votingSessionEntity.getQuestions().get(0).setQuestion("WARUM BIST DU SO?");
+        votingSessionEntity.getQuestions().get(0).setOptions(new ArrayList<>());
+        votingSessionEntity.getQuestions().get(0).getOptions().add("Jaa");
+        votingSessionEntity.getQuestions().get(0).getOptions().add("Neiin");
+        votingSessionEntity.getQuestions().get(0).getOptions().add("Viieleicht");
+
+        votingSessionEntity.getQuestions().add( new VotingQuestionEntity());
+        votingSessionEntity.getQuestions().get(1).setQuestion("WARUM BIST DU SO?");
+        votingSessionEntity.getQuestions().get(1).setOptions(new ArrayList<>());
+        votingSessionEntity.getQuestions().get(1).getOptions().add("Jaa");
+        votingSessionEntity.getQuestions().get(1).getOptions().add("Neiin");
+        votingSessionEntity.getQuestions().get(1).getOptions().add("Viieleicht");
+
         votingSessionEntity.getResults().add(new VotingPostEntity(new VoterEntity("Daniel"), new HashMap<String, Integer>() {{
-            put("1", 1);
-            put("2",2);
-            put("3",3);
+            put("0", 1);
+            put("1",2);
+        }}));
+
+        votingSessionEntity.getResults().add(new VotingPostEntity(new VoterEntity("Daniel"), new HashMap<String, Integer>() {{
+            put("0", 2);
+            put("1",2);
         }}));
         votingSessionCollection.insertOne(votingSessionEntity);
         return votingSessionEntity;

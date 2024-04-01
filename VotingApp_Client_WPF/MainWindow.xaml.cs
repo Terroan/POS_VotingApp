@@ -30,5 +30,18 @@ namespace VotingApp_Client_WPF
         {
             MainFrame.Navigate(new CreateSessionPage());
         }
+
+        private void tbSessionCode_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void ToggleJoinBtn()
+        {
+            if(btnJoinSession.IsEnabled)
+                btnJoinSession.IsEnabled = false;
+            else
+                btnJoinSession.IsEnabled = true;
+        }
     }
 }

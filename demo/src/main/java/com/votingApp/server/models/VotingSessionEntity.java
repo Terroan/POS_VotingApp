@@ -17,7 +17,7 @@ public class VotingSessionEntity {
 
     }
 
-    public VotingSessionEntity(ObjectId id, String sessionTitle, VoterEntity creator, List<VotingQuestionEntity> questions) {
+    public VotingSessionEntity(ObjectId id, String sessionTitle, VoterEntity creator, ArrayList<VotingQuestionEntity> questions) {
         this.id = id;
         this.sessionTitle = sessionTitle;
         this.creator = creator;

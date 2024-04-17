@@ -1,26 +1,27 @@
 package com.votingApp.server.services;
 
 import com.votingApp.server.dtos.VotingPostDTO;
-import com.votingApp.server.dtos.VotingSessionDTO;
-import com.votingApp.server.dtos.VotingSessionWithPasswordDTO;
+import com.votingApp.server.dtos.VotingSessionExgressDTO;
+import com.votingApp.server.dtos.VotingSessionIngressDTO;
+import com.votingApp.server.models.VoterEntity;
 import com.votingApp.server.models.VotingSessionEntity;
+import org.bson.types.ObjectId;
 
 import java.util.List;
 
-// COMPLET CHANGE
 public interface IVotingSessionService {
 
-    VotingSessionDTO create(VotingSessionWithPasswordDTO votingSessionWithPasswordDTO);
+    VotingSessionIngressDTO create(VotingSessionEntity votingSessionEntity, VoterEntity voterEntity);
 
-    VotingSessionDTO read(String sessionID);
+    VotingSessionExgressDTO read(String sessionID);
 
-    List<VotingSessionDTO> readAll();
+    List<VotingSessionIngressDTO> readAll();
 
-    VotingSessionDTO update(String sessionID, VotingSessionWithPasswordDTO votingSessionWithPasswordDTO);
+    boolean update(ObjectId id, VotingSessionEntity votingSessionEntity, VoterEntity voterEntity);
 
-    Long delete(String sessionID);
+    boolean delete(ObjectId id, VoterEntity voterEntity);
 
     Long deleteAll();
 
-    VotingPostDTO postResults(String sessionID, VotingPostDTO votingPostDTO);
+    boolean postResults(String sessionID, VotingPostDTO votingPostDTO);
 }

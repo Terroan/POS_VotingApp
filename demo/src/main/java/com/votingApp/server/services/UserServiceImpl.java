@@ -1,15 +1,9 @@
 package com.votingApp.server.services;
 
-import com.votingApp.server.dtos.VotingPostDTO;
-import com.votingApp.server.dtos.VotingSessionDTO;
-import com.votingApp.server.dtos.VotingSessionWithPasswordDTO;
 import com.votingApp.server.models.VoterEntity;
-import com.votingApp.server.models.VotingSessionEntity;
 import com.votingApp.server.repositories.IUserRepository;
-import com.votingApp.server.repositories.IVotingSessionRepository;
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class UserServiceImpl implements IUserService {
@@ -24,7 +18,7 @@ public class UserServiceImpl implements IUserService {
         return userRepository.addUser(user);
     }
 
-    public boolean checkUser(VoterEntity user) {
+    public VoterEntity checkUser(VoterEntity user) {
         return userRepository.checkUser(user);
     }
 }

@@ -10,21 +10,21 @@ import java.util.List;
 public interface IVotingSessionRepository {
     VotingSessionEntity create(VotingSessionEntity votingSessionEntity);
 
-    boolean startSession(ObjectId id, VoterEntity creator);
+    boolean startSession(ObjectId id);
 
-    boolean endSession(ObjectId id, VoterEntity creator);
+    boolean endSession(ObjectId id);
 
     VotingSessionEntity read(String sessionID);
 
     List<VotingSessionEntity> readAll();
 
-    List<VotingSessionEntity> findAllByUser(VoterEntity user);
+    List<VotingSessionEntity> findAllById(List<ObjectId> ids);
 
-    boolean update(Object id, VotingSessionEntity newVse, VoterEntity creator)
+    boolean update(Object id, VotingSessionEntity newVse);
 
-    boolean delete(ObjectId id, VoterEntity creator);
+    boolean delete(ObjectId id);
 
     Long deleteAll();
 
-    boolean postResults(String sessionID, VotingPostDTO votingPostDTO)
+    boolean postResults(String sessionID, VotingPostDTO votingPostDTO);
 }

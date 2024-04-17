@@ -9,7 +9,6 @@ public class VotingSessionEntity {
     private ObjectId id;
     private String sessionID;
     private String sessionTitle;
-    private VoterEntity creator;
     private List<VotingQuestionEntity> questions;
     private List<VotingPostEntity> results;
 
@@ -17,10 +16,9 @@ public class VotingSessionEntity {
 
     }
 
-    public VotingSessionEntity(ObjectId id, String sessionTitle, VoterEntity creator, ArrayList<VotingQuestionEntity> questions) {
+    public VotingSessionEntity(ObjectId id, String sessionTitle, ArrayList<VotingQuestionEntity> questions) {
         this.id = id;
         this.sessionTitle = sessionTitle;
-        this.creator = creator;
         this.questions = questions;
         this.results = new ArrayList<>();
     }
@@ -48,15 +46,6 @@ public class VotingSessionEntity {
 
     public void setSessionTitle(String sessionTitle) {
         this.sessionTitle = sessionTitle;
-    }
-
-    public VoterEntity getCreator() {
-        return creator;
-    }
-
-    public VotingSessionEntity setCreator(VoterEntity creator) {
-        this.creator = creator;
-        return this;
     }
 
     public List<VotingQuestionEntity> getQuestions() {

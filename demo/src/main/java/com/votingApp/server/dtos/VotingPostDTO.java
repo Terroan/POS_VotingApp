@@ -9,11 +9,11 @@ import java.util.HashMap;
 
 public record VotingPostDTO(
 
-        VoterEntity voter,
+        String voter,
         HashMap<String, Integer> votes) {
 
-    public VotingPostDTO(VotingPostEntity vpe) {
-        this(vpe.getVoter(), vpe.getVotes());
+    public VotingPostDTO(VotingPostEntity vpe, String voter) {
+        this(voter, vpe.getVotes());
     }
 
     public VotingPostEntity toVotingPostEntity() {

@@ -4,23 +4,23 @@ import java.util.HashMap;
 
 public class VotingPostEntity {
 
-    private VoterEntity voter;
+    private String voter;
     private HashMap<String, Integer> votes; //-> format: "1:2" , "question:vote"
 
     public VotingPostEntity() {
 
     }
 
-    public VotingPostEntity(VoterEntity voter, HashMap<String, Integer> votes) {
+    public VotingPostEntity(String voter, HashMap<String, Integer> votes) {
         this.voter = voter;
         this.votes = votes;
     }
 
-    public VoterEntity getVoter() {
+    public String getVoter() {
         return voter;
     }
 
-    public void setVoter(VoterEntity voter) {
+    public void setVoter(String voter) {
         this.voter = voter;
     }
 

@@ -1,11 +1,14 @@
 package com.votingApp.server.services;
 
+import com.votingApp.server.dtos.VoterIngressDTO;
 import com.votingApp.server.dtos.VotingPostDTO;
-import com.votingApp.server.dtos.VotingSessionDTO;
-import com.votingApp.server.dtos.VotingSessionWithPasswordDTO;
+import com.votingApp.server.dtos.VotingSessionExgressDTO;
+import com.votingApp.server.dtos.VotingSessionIngressDTO;
+import com.votingApp.server.models.VoterEntity;
 import com.votingApp.server.models.VotingSessionEntity;
 import com.votingApp.server.repositories.IUserRepository;
 import com.votingApp.server.repositories.IVotingSessionRepository;
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,53 +17,56 @@ import java.util.List;
 public class VotingSessionServiceImpl implements IVotingSessionService {
 
     private final IVotingSessionRepository votingSessionRepository;
-    private final IUserRepository votingSessionPasswordRepository;
+    private final IUserRepository userRepository;
 
-    public VotingSessionServiceImpl(IVotingSessionRepository votingSessionRepository, IUserRepository votingSessionPasswordRepository) {
+    public VotingSessionServiceImpl(IVotingSessionRepository votingSessionRepository, IUserRepository userRepository) {
         this.votingSessionRepository = votingSessionRepository;
-        this.votingSessionPasswordRepository = votingSessionPasswordRepository;
-    }
-
-    public boolean checkPassword(String id, String password) {
-        return votingSessionPasswordRepository.checkPassword(id, password);
+        this.userRepository = userRepository;
     }
 
     @Override
-    public VotingSessionDTO create(VotingSessionWithPasswordDTO votingSessionWithPasswordDTO) {
-        VotingSessionDTO tmp = new VotingSessionDTO(votingSessionRepository.create(votingSessionWithPasswordDTO.toVotingSessionEntity()));
-        votingSessionPasswordRepository.addEntry(tmp.sessionID(), votingSessionWithPasswordDTO.password());
-        return tmp;
+    public VotingSessionIngressDTO create(VotingSessionEntity votingSessionEntity, VoterEntity voterEntity) {
+        VoterEntity ve = userRepository.checkUser(voterEntity);
+        if(ve == null)
+            return null;
+
+        ve.getSessions().add(votingSessionRepository.create(votingSessionEntity).getId()); // add id to user's list
+        return new VotingSessionIngressDTO(votingSessionEntity);
     }
 
     @Override
-    public VotingSessionDTO read(String id) {
+    public VotingSessionExgressDTO read(String id) { //session code
         VotingSessionEntity vse = votingSessionRepository.read(id);
+        VoterEntity ve = userRepository.findBySessionId(vse.getId());
         if(vse != null)
-            return new VotingSessionDTO(vse);
+            return new VotingSessionExgressDTO(vse, ve);
         return null;
     }
 
     @Override
-    public List<VotingSessionDTO> readAll() { return votingSessionRepository.readAll().stream().map(VotingSessionDTO::new).toList(); }
+    public List<VotingSessionIngressDTO> readAll() { return votingSessionRepository.readAll().stream().map(VotingSessionIngressDTO::new).toList(); }
 
     @Override
-    public Long delete(String id) {
-        return votingSessionRepository.delete(id);
+    public boolean delete(ObjectId id, VoterEntity creator) {
+        VoterEntity ve = userRepository.checkUser(creator);
+        if(ve != null && ve.getSessions().contains(id))
+            return votingSessionRepository.delete(id);
+        return false;
     }
 
     @Override
     public Long deleteAll() { return votingSessionRepository.deleteAll(); }
 
     @Override
-    public VotingSessionDTO update(String sessionID, VotingSessionWithPasswordDTO votingSessionWithPasswordDTO) {
-        VotingSessionEntity vse = votingSessionRepository.update(sessionID, votingSessionWithPasswordDTO.toVotingSessionEntity(), false);
-        votingSessionPasswordRepository.updateSessionID(sessionID, vse.getSessionID());
-        return new VotingSessionDTO(vse);
+    public boolean update(ObjectId id, VotingSessionEntity votingSessionEntity, VoterEntity creator) {
+        VoterEntity ve = userRepository.checkUser(creator);
+        if(ve != null && ve.getSessions().contains(id))
+            return votingSessionRepository.update(id, votingSessionEntity);
+        return false;
     }
 
     @Override
-    public VotingPostDTO postResults(String sessionID, VotingPostDTO votingPostDTO) {
-        votingSessionRepository.postResults(sessionID, votingPostDTO);
-        return votingPostDTO;
+    public boolean postResults(String sessionID, VotingPostDTO votingPostDTO) {
+        return votingSessionRepository.postResults(sessionID, votingPostDTO)
     }
 }

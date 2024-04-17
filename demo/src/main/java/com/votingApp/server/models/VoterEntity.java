@@ -2,10 +2,13 @@ package com.votingApp.server.models;
 
 import org.bson.types.ObjectId;
 
+import java.util.List;
+
 public class VoterEntity {
     private ObjectId id;
     private String name;
     private String password;
+    private List<ObjectId> sessions;
 
     public VoterEntity() {
 
@@ -13,6 +16,7 @@ public class VoterEntity {
 
     public VoterEntity(ObjectId id, String name, String password) {
         this.id = id;
+        this.sessions = sessions;
         this.name = name;
         this.password = password;
     }
@@ -23,6 +27,14 @@ public class VoterEntity {
 
     public void setId(ObjectId id) {
         this.id = id;
+    }
+
+    public List<ObjectId> getSessions() {
+        return sessions;
+    }
+
+    public void setSessions(List<ObjectId> sessions) {
+        this.sessions = sessions;
     }
 
     public String getName() {
@@ -54,6 +66,7 @@ public class VoterEntity {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
+                ", sessions=" + sessions +
                 '}';
     }
 }

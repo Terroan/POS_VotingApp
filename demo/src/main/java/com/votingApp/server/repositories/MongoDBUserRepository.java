@@ -6,8 +6,6 @@ import com.mongodb.TransactionOptions;
 import com.mongodb.WriteConcern;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.FindOneAndReplaceOptions;
-import com.votingApp.server.models.PasswordEntity;
 import com.votingApp.server.models.VoterEntity;
 import jakarta.annotation.PostConstruct;
 import org.bson.types.ObjectId;
@@ -15,7 +13,6 @@ import org.springframework.stereotype.Repository;
 
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
-import static com.mongodb.client.model.ReturnDocument.AFTER;
 
 @Repository
 public class MongoDBUserRepository implements IUserRepository {
@@ -49,11 +46,20 @@ public class MongoDBUserRepository implements IUserRepository {
     }
 
     @Override
-    public boolean checkUser(VoterEntity user) {
+    public VoterEntity checkUser(VoterEntity user) {
         // Find user by username
         VoterEntity tmp = userRepository.find(eq("name", user.getName())).first();
-        if (user != null)
-            return user.getPassword().equals(user.getPassword()); //check user password
-        return false;
+        if (tmp != null && tmp.getPassword().equals(user.getPassword())) //check user password
+            return tmp;
+        return null;
+    }
+
+    @Override
+    public VoterEntity findBySessionId(ObjectId id) {
+        for(VoterEntity ve : userRepository.find()) {
+            if(ve.getSessions().contains(id))
+                return ve;
+        }
+        return null;
     }
 }

@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Random;
 
 import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.in;
 import static com.mongodb.client.model.ReturnDocument.AFTER;
 
 @Repository
@@ -55,14 +56,10 @@ public class MongoDBVotingSessionRepository implements IVotingSessionRepository 
     }
 
     @Override
-    public boolean startSession(ObjectId id, VoterEntity creator) {
+    public boolean startSession(ObjectId id) {
         // find session by id
         VotingSessionEntity vse = votingSessionCollection.find(eq("_id", id)).first();
         if(vse == null)
-            return false;
-
-        // check if user is correct
-        if(!vse.getCreator().checkUser(creator))
             return false;
 
         // set session id -> "start" session
@@ -74,14 +71,10 @@ public class MongoDBVotingSessionRepository implements IVotingSessionRepository 
     }
 
     @Override
-    public boolean endSession(ObjectId id, VoterEntity creator) {
+    public boolean endSession(ObjectId id) {
         // find session by id
         VotingSessionEntity vse = votingSessionCollection.find(eq("_id", id)).first();
         if(vse == null)
-            return false;
-
-        // check if user is correct
-        if(!vse.getCreator().checkUser(creator))
             return false;
 
         // remove session id -> "end" session
@@ -90,13 +83,8 @@ public class MongoDBVotingSessionRepository implements IVotingSessionRepository 
     }
 
     @Override
-    public List<VotingSessionEntity> findAllByUser(VoterEntity creator) {
-        List<VotingSessionEntity> vses = new ArrayList<>();
-        for (VotingSessionEntity vse : votingSessionCollection.find().into(new ArrayList<>())) {
-            if(vse.getCreator().checkUser(creator))
-                vses.add(vse);
-        }
-        return vses;
+    public List<VotingSessionEntity> findAllById(List<ObjectId> ids) {
+        return votingSessionCollection.find(in("_id", ids)).into(new ArrayList<>());
     }
 
     @Override
@@ -110,19 +98,14 @@ public class MongoDBVotingSessionRepository implements IVotingSessionRepository 
     }
 
     @Override
-    public boolean delete(ObjectId id, VoterEntity creator) {
+    public boolean delete(ObjectId id) {
         // find session by id
         VotingSessionEntity vse = votingSessionCollection.find(eq("_id", id)).first();
         if(vse == null)
             return false;
 
-        // check if user is correct
-        if(!vse.getCreator().checkUser(creator))
-            return false;
-
         // delete session
-        votingSessionCollection.deleteOne(eq("_id", id));
-        return true;
+        return votingSessionCollection.deleteOne(eq("_id", id)).wasAcknowledged();
     }
 
     @Override
@@ -130,14 +113,10 @@ public class MongoDBVotingSessionRepository implements IVotingSessionRepository 
 
 
     @Override
-    public boolean update(Object id, VotingSessionEntity newVse, VoterEntity creator) {
+    public boolean update(Object id, VotingSessionEntity newVse) {
         // find session by id
         VotingSessionEntity vse = votingSessionCollection.find(eq("_id", id)).first();
         if(vse == null)
-            return false;
-
-        // check if user is correct
-        if(!vse.getCreator().checkUser(creator))
             return false;
 
         newVse.setId(vse.getId());

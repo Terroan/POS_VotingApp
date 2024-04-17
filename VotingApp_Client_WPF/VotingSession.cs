@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace VotingApp_Client_WPF
 {
-    internal class VotingSession
+    public class VotingSession
     {
         private string? _sessionTitle;
         private VotingSessionCreator? _creator = new();

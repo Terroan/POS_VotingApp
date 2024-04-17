@@ -4,7 +4,7 @@ import com.votingApp.server.dtos.VotingPostDTO;
 import com.votingApp.server.dtos.VotingSessionDTO;
 import com.votingApp.server.dtos.VotingSessionWithPasswordDTO;
 import com.votingApp.server.models.VotingSessionEntity;
-import com.votingApp.server.repositories.IVotingSessionPasswordRepository;
+import com.votingApp.server.repositories.IUserRepository;
 import com.votingApp.server.repositories.IVotingSessionRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +14,9 @@ import java.util.List;
 public class VotingSessionServiceImpl implements IVotingSessionService {
 
     private final IVotingSessionRepository votingSessionRepository;
-    private final IVotingSessionPasswordRepository votingSessionPasswordRepository;
+    private final IUserRepository votingSessionPasswordRepository;
 
-    public VotingSessionServiceImpl(IVotingSessionRepository votingSessionRepository, IVotingSessionPasswordRepository votingSessionPasswordRepository) {
+    public VotingSessionServiceImpl(IVotingSessionRepository votingSessionRepository, IUserRepository votingSessionPasswordRepository) {
         this.votingSessionRepository = votingSessionRepository;
         this.votingSessionPasswordRepository = votingSessionPasswordRepository;
     }

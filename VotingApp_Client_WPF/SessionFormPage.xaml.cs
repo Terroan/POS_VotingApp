@@ -140,7 +140,7 @@ namespace VotingApp_Client_WPF
         {
             gbQuestions.Visibility = Visibility.Hidden;
             gbOptions.Visibility = Visibility.Visible;
-            ShowOptions(lvQuestions.SelectedIndex);
+            ShowOptions();
         }
 
         private void ShowInformationMessage(string msg)
@@ -151,6 +151,11 @@ namespace VotingApp_Client_WPF
         private void ShowErrorMessage(string msg)
         {
             MessageBox.Show(msg, System.Reflection.Assembly.GetEntryAssembly().GetName().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+        private void lvQuestions_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ShowOptions();
         }
     }
 }

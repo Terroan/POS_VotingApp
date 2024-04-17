@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace VotingApp_Client_WPF
 {
-    class VontingSessionIngress
+    public class VontingSessionIngress
     {
         private string? _sessionID;
         private string? _title;

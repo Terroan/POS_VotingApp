@@ -1,20 +1,8 @@
 ﻿<Window x:Class="VotingApp_Client_WPF.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="VotingApp" Background="#FFD27EB0" Height="625" Width="955">
+        Title="VotingApp" Background="#FFD27EB0" Height="650" Width="955">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,10,10,10" Grid.Row="0">
-            <TextBlock Text="Voting App" FontSize="70" HorizontalAlignment="Center" Background="#19D8D4CB" FontFamily="Showcard Gothic" VerticalAlignment="Stretch" Grid.Row="0" Margin="50"/>
-            <Button x:Name="btnCreateSession" Content="Create new session" Width="350" Height="100" Margin="5" FontFamily="Showcard Gothic" Background="#6646CA33" Click="btnCreateSession_Click"/>
-            <Button x:Name="btnJoinSession" Content="Join session" Width="350" Height="100" Margin="5" FontFamily="Showcard Gothic" Background="#66ED2929"/>
-        </StackPanel>
-
-        <!-- Place Frame for hosting pages -->
-        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Grid.Row="0"/>
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Visibility="Visible" Grid.Row="0"/>
     </Grid>
 </Window>

@@ -13,5 +13,6 @@ namespace VotingApp_Client_WPF
     /// </summary>
     public partial class App : Application
     {
+    
     }
 }

@@ -7,9 +7,9 @@ import com.votingApp.server.models.VotingSessionEntity;
 
 import java.util.List;
 
+// COMPLET CHANGE
 public interface IVotingSessionService {
 
-    boolean checkPassword(String sessionID, String password);
     VotingSessionDTO create(VotingSessionWithPasswordDTO votingSessionWithPasswordDTO);
 
     VotingSessionDTO read(String sessionID);

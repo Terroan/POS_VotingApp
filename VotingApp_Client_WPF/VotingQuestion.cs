@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace VotingApp_Client_WPF
 {
-    internal class VotingQuestion
+    public class VotingQuestion
     {
         private string? _question = "";
         private List<string?>? _options = new();

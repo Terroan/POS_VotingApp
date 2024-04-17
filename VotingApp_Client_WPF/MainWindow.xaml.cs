@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Sockets;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,25 +26,7 @@ namespace VotingApp_Client_WPF
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        //Switch to createSessionPage
-        private void btnCreateSession_Click(object sender, RoutedEventArgs e)
-        {
-            MainFrame.Navigate(new CreateSessionPage());
-        }
-
-        private void tbSessionCode_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void ToggleJoinBtn()
-        {
-            if(btnJoinSession.IsEnabled)
-                btnJoinSession.IsEnabled = false;
-            else
-                btnJoinSession.IsEnabled = true;
+            MainFrame.Navigate(new StartPage());
         }
     }
 }

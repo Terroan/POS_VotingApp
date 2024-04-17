@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace VotingApp_Client_WPF
 {
-    class Voter
+    public class Voter
     {
         private string? _name;
 

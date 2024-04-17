@@ -50,36 +50,53 @@ public class MongoDBVotingSessionRepository implements IVotingSessionRepository 
     @Override
     public VotingSessionEntity create(VotingSessionEntity votingSessionEntity) {
         votingSessionEntity.setId(new ObjectId());
+        votingSessionCollection.insertOne(votingSessionEntity);
+        return votingSessionEntity;
+    }
+
+    @Override
+    public boolean startSession(ObjectId id, VoterEntity creator) {
+        // find session by id
+        VotingSessionEntity vse = votingSessionCollection.find(eq("_id", id)).first();
+        if(vse == null)
+            return false;
+
+        // check if user is correct
+        if(!vse.getCreator().checkUser(creator))
+            return false;
+
+        // set session id -> "start" session
         String sessionID = getNewSessionID();
         while(read(sessionID) != null)
             sessionID = getNewSessionID();
-        votingSessionEntity.setSessionID(sessionID);
+        vse.setSessionID(sessionID);
+        return true;
+    }
 
-        votingSessionEntity.getQuestions().add( new VotingQuestionEntity());
-        votingSessionEntity.getQuestions().get(0).setQuestion("WARUM BIST DU SO?");
-        votingSessionEntity.getQuestions().get(0).setOptions(new ArrayList<>());
-        votingSessionEntity.getQuestions().get(0).getOptions().add("Jaa");
-        votingSessionEntity.getQuestions().get(0).getOptions().add("Neiin");
-        votingSessionEntity.getQuestions().get(0).getOptions().add("Viieleicht");
+    @Override
+    public boolean endSession(ObjectId id, VoterEntity creator) {
+        // find session by id
+        VotingSessionEntity vse = votingSessionCollection.find(eq("_id", id)).first();
+        if(vse == null)
+            return false;
 
-        votingSessionEntity.getQuestions().add( new VotingQuestionEntity());
-        votingSessionEntity.getQuestions().get(1).setQuestion("WARUM BIST DU SO?");
-        votingSessionEntity.getQuestions().get(1).setOptions(new ArrayList<>());
-        votingSessionEntity.getQuestions().get(1).getOptions().add("Jaa");
-        votingSessionEntity.getQuestions().get(1).getOptions().add("Neiin");
-        votingSessionEntity.getQuestions().get(1).getOptions().add("Viieleicht");
+        // check if user is correct
+        if(!vse.getCreator().checkUser(creator))
+            return false;
 
-        votingSessionEntity.getResults().add(new VotingPostEntity(new VoterEntity("Daniel"), new HashMap<String, Integer>() {{
-            put("0", 1);
-            put("1",2);
-        }}));
+        // remove session id -> "end" session
+        vse.setSessionID("");
+        return true;
+    }
 
-        votingSessionEntity.getResults().add(new VotingPostEntity(new VoterEntity("Daniel"), new HashMap<String, Integer>() {{
-            put("0", 2);
-            put("1",2);
-        }}));
-        votingSessionCollection.insertOne(votingSessionEntity);
-        return votingSessionEntity;
+    @Override
+    public List<VotingSessionEntity> findAllByUser(VoterEntity creator) {
+        List<VotingSessionEntity> vses = new ArrayList<>();
+        for (VotingSessionEntity vse : votingSessionCollection.find().into(new ArrayList<>())) {
+            if(vse.getCreator().checkUser(creator))
+                vses.add(vse);
+        }
+        return vses;
     }
 
     @Override
@@ -93,34 +110,49 @@ public class MongoDBVotingSessionRepository implements IVotingSessionRepository 
     }
 
     @Override
-    public Long delete(String id) { return votingSessionCollection.deleteOne(eq("_id", new ObjectId(id))).getDeletedCount(); }
+    public boolean delete(ObjectId id, VoterEntity creator) {
+        // find session by id
+        VotingSessionEntity vse = votingSessionCollection.find(eq("_id", id)).first();
+        if(vse == null)
+            return false;
+
+        // check if user is correct
+        if(!vse.getCreator().checkUser(creator))
+            return false;
+
+        // delete session
+        votingSessionCollection.deleteOne(eq("_id", id));
+        return true;
+    }
 
     @Override
     public Long deleteAll() { return votingSessionCollection.deleteMany(new Document()).getDeletedCount(); }
 
 
     @Override
-    public VotingSessionEntity update(String sessionID, VotingSessionEntity votingSessionEntity, boolean results) {
-        FindOneAndReplaceOptions options = new FindOneAndReplaceOptions().returnDocument(AFTER);
-        if(results)
-            votingSessionEntity.setSessionID(sessionID);
-        else
-        {
-            String tmp = getNewSessionID();
-            while(read(tmp) != null)
-                sessionID = getNewSessionID();
-            votingSessionEntity.setSessionID(tmp);
-        }
-        votingSessionEntity.setId(read(sessionID).getId());
-        return votingSessionCollection.findOneAndReplace(eq("sessionID", sessionID), votingSessionEntity, options);
+    public boolean update(Object id, VotingSessionEntity newVse, VoterEntity creator) {
+        // find session by id
+        VotingSessionEntity vse = votingSessionCollection.find(eq("_id", id)).first();
+        if(vse == null)
+            return false;
+
+        // check if user is correct
+        if(!vse.getCreator().checkUser(creator))
+            return false;
+
+        newVse.setId(vse.getId());
+        votingSessionCollection.findOneAndReplace(eq("id", id), newVse);
+        return true;
     }
 
     @Override
-    public VotingPostDTO postResults(String sessionID, VotingPostDTO votingPostDTO) {
+    public boolean postResults(String sessionID, VotingPostDTO votingPostDTO) {
         VotingSessionEntity vse = read(sessionID);
+        if(vse == null)
+            return false;
         vse.getResults().add(votingPostDTO.toVotingPostEntity());
-        update(sessionID, vse, true);
-        return votingPostDTO;
+        votingSessionCollection.findOneAndReplace(eq("sessionId", sessionID), vse);
+        return true;
     }
 
     private String getNewSessionID() {

@@ -28,3 +28,7 @@ C:\Users\Daniel\Desktop\GitHubClones\POS_VotingApp\VotingApp_Client_WPF\obj\Debu
 C:\Users\Daniel\Desktop\GitHubClones\POS_VotingApp\VotingApp_Client_WPF\bin\Debug\net7.0-windows\LiveCharts.dll
 C:\Users\Daniel\Desktop\GitHubClones\POS_VotingApp\VotingApp_Client_WPF\bin\Debug\net7.0-windows\LiveCharts.Wpf.dll
 C:\Users\Daniel\Desktop\GitHubClones\POS_VotingApp\VotingApp_Client_WPF\obj\Debug\net7.0-windows\VotingApp_Client_WPF.csproj.CopyComplete
+C:\Users\Daniel\Desktop\GitHubClones\POS_VotingApp\VotingApp_Client_WPF\obj\Debug\net7.0-windows\SessionFormPage.g.cs
+C:\Users\Daniel\Desktop\GitHubClones\POS_VotingApp\VotingApp_Client_WPF\obj\Debug\net7.0-windows\SessionFormPage.baml
+C:\Users\Daniel\Desktop\GitHubClones\POS_VotingApp\VotingApp_Client_WPF\obj\Debug\net7.0-windows\StartPage.g.cs
+C:\Users\Daniel\Desktop\GitHubClones\POS_VotingApp\VotingApp_Client_WPF\obj\Debug\net7.0-windows\StartPage.baml

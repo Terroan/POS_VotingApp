@@ -9,7 +9,7 @@
           Title="Session Code"
           Background="#FFD27EB0"
           FontFamily="Showcard Gothic">
-        <Grid HorizontalAlignment="Center">
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -26,7 +26,6 @@
             
             <Button x:Name="btnEndSession" 
                     Content="End session" 
-                    Background="#FFBDAEBC" 
                     FontSize="30" 
                     FontWeight="Bold" 
                     HorizontalAlignment="Center" 

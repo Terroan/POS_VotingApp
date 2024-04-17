@@ -169,8 +169,14 @@ namespace VotingApp_Client_WPF
                     else
                     {
                         ShowErrorMessage("Fehler! Statuscode: " + response.StatusCode);
+                        btnCreateSession.IsEnabled = true;
                     }
                 }
+            }
+            catch (HttpRequestException hre)
+            {
+                ShowErrorMessage("Server nicht erreichbar!");
+                btnCreateSession.IsEnabled = true;
             }
             catch (Exception ex)
             {

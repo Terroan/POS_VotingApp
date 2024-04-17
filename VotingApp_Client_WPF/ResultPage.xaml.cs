@@ -65,7 +65,13 @@ namespace VotingApp_Client_WPF
 
         private void FillDiagramm(int question)
         {
+           // lvcChart.Width = 800; // Breite des Diagramms
+           // lvcChart.Height = 600; // Höhe des Diagramms
+
             lvcChart.Series.Clear();
+            lvcChart.AxisX.Clear();
+            lvcChart.AxisY.Clear();
+
             SeriesCollection seriesCollection = new SeriesCollection();
             ChartValues<int> chartValues = new ChartValues<int>();
             List<string> labels = new List<string>();
@@ -74,14 +80,14 @@ namespace VotingApp_Client_WPF
             {
                 if(Convert.ToInt32(dict.Key) == question)
                 {
-                    int x = 1;
-                    foreach(var option in session.Questions[question-1].Options)
+                    int x = 0;
+                    foreach(var option in session.Questions[question].Options)
                     {
                         if (!dict.Value.ContainsKey(x))
                             chartValues.Add(0);
                         else
                             chartValues.Add(dict.Value[x]);
-                        labels.Add(session.Questions[question - 1].Options[x-1]);
+                        labels.Add(session.Questions[question].Options[x]);
                         x++;// Fügen Sie den Label für die Option hinzu
                     }
                 }
@@ -132,7 +138,12 @@ namespace VotingApp_Client_WPF
         private void cbQuestions_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             lblQuestion.Content = session.Questions[cbQuestions.SelectedIndex].Question;
-            FillDiagramm(cbQuestions.SelectedIndex+1);
+            FillDiagramm(cbQuestions.SelectedIndex);
+        }
+
+        private void btnGoBackToStart_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new StartPage());
         }
     }
 }

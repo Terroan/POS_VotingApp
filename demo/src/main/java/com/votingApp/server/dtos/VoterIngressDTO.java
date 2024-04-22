@@ -3,6 +3,8 @@ package com.votingApp.server.dtos;
 import com.votingApp.server.models.VoterEntity;
 import org.bson.types.ObjectId;
 
+import java.util.ArrayList;
+
 public record VoterIngressDTO(
         String name,
         String password) {
@@ -12,6 +14,6 @@ public record VoterIngressDTO(
     }
 
     public VoterEntity toVoterEntity() {
-        return new VoterEntity(new ObjectId(), name, password);
+        return new VoterEntity(new ObjectId(), name, password, new ArrayList<>());
     }
 }

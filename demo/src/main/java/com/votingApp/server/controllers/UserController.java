@@ -1,94 +1,52 @@
 package com.votingApp.server.controllers;
 
-import com.votingApp.server.dtos.VotingPostDTO;
-import com.votingApp.server.dtos.VotingSessionIngressDTO;
-import com.votingApp.server.services.IVotingSessionService;
+import com.votingApp.server.dtos.VoterIngressDTO;
+import com.votingApp.server.models.VoterEntity;
+import com.votingApp.server.services.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api")
 public class UserController {
     private final static Logger LOGGER = LoggerFactory.getLogger(VotingSessionController.class);
 
-    private final IVotingSessionService votingSessionService;
+    private final IUserService userService;
 
-    public VotingSessionController(IVotingSessionService votingSessionService) {
+    public UserController(IUserService userService) {
 
-        this.votingSessionService = votingSessionService;
+        this.userService = userService;
     }
 
     // ---------CRUD---------
-
-    //Post (create) a new session
-    @PostMapping("session")
-    public ResponseEntity<VotingSessionIngressDTO> createVotingSession(@RequestBody VotingSessionWithPasswordDTO votingSessionWithPasswordDTO) {
+    @PostMapping("user/create")
+    public ResponseEntity<VoterIngressDTO> signUp(@RequestBody VoterIngressDTO voterIngressDTO) {
         try {
-            return ResponseEntity.ok(votingSessionService.create(votingSessionWithPasswordDTO));
-        }
-        catch(Exception e) {
-            System.out.println(e);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-    }
-
-    //Post results to a session, return 404 if session not found
-    @PostMapping("session/{sessionID}/results")
-    public ResponseEntity<VotingPostDTO> postResults(@PathVariable String sessionID, @RequestBody VotingPostDTO votingPostDTO) {
-        try {
-            VotingSessionIngressDTO votingSessionIngressDTO = votingSessionService.read(sessionID);
-            if (votingSessionIngressDTO == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            return ResponseEntity.ok(votingSessionService.postResults(sessionID, votingPostDTO));
+            boolean tmp = userService.addUser(voterIngressDTO.toVoterEntity());
+            if(!tmp)
+                return ResponseEntity.status(HttpStatus.CONFLICT).build();
+            return ResponseEntity.ok(voterIngressDTO);
         }
         catch(Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
-    //Get a specific session by id
-    @GetMapping("session/{id}")
-    public ResponseEntity<VotingSessionIngressDTO> readVotingSession(@PathVariable String id) {
-        VotingSessionIngressDTO votingSessionIngressDTO = votingSessionService.read(id);
-        if (votingSessionIngressDTO == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        return ResponseEntity.ok(votingSessionIngressDTO);
-    }
-
-    //Get all sessions in the repo
-    @GetMapping("sessions")
-    public List<VotingSessionIngressDTO> readVotingSessions() {
-        return votingSessionService.readAll();
-    }
-
-    //Delete a specific session from the repo
-    @DeleteMapping("session/{sessionID}/{password}")
-    public ResponseEntity<Long> deleteVotingSession(@PathVariable String sessionID, @PathVariable String password) {
-        VotingSessionIngressDTO votingSessionIngressDTO = votingSessionService.read(sessionID);
-        if (votingSessionIngressDTO == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        if(votingSessionService.checkPassword(sessionID, password) == false) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        return ResponseEntity.ok(votingSessionService.delete(votingSessionIngressDTO.id()));
-    }
-
-    @DeleteMapping("sessions")
-    public ResponseEntity<Long> deleteVotingSessions() {
-        return ResponseEntity.ok(votingSessionService.deleteAll());
-    }
-
-    //Update session
-    @PutMapping("session/{sessionID}")
-    public  ResponseEntity<VotingSessionIngressDTO> updateVotingSession(@PathVariable String sessionID, @RequestBody VotingSessionWithPasswordDTO votingSessionWithPasswordDTO) {
+    @PostMapping("user/login")
+    public ResponseEntity<VoterIngressDTO> login(@RequestBody VoterIngressDTO voterIngressDTO) {
         try {
-            VotingSessionIngressDTO votingSessionIngressDTO = votingSessionService.read(sessionID);
-            if (votingSessionIngressDTO == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            if(votingSessionService.checkPassword(sessionID, votingSessionWithPasswordDTO.password()) == false) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-            return ResponseEntity.ok(votingSessionService.update(sessionID, votingSessionWithPasswordDTO));
+            VoterEntity tmp = userService.checkUser(voterIngressDTO.toVoterEntity());
+            if(tmp == null)
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.ok(voterIngressDTO);
         }
         catch(Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
+
+
 }

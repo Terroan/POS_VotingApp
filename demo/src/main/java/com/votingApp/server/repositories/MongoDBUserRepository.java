@@ -6,10 +6,13 @@ import com.mongodb.TransactionOptions;
 import com.mongodb.WriteConcern;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.ReplaceOptions;
 import com.votingApp.server.models.VoterEntity;
 import jakarta.annotation.PostConstruct;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
 
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
@@ -41,6 +44,8 @@ public class MongoDBUserRepository implements IUserRepository {
         VoterEntity tmp = userRepository.find(eq("name", user.getName())).first();
         if(tmp != null)
             return false;
+        if(user.getSessions() == null)
+            user.setSessions(new ArrayList<>());
         userRepository.insertOne(user);
         return true;
     }
@@ -52,6 +57,11 @@ public class MongoDBUserRepository implements IUserRepository {
         if (tmp != null && tmp.getPassword().equals(user.getPassword())) //check user password
             return tmp;
         return null;
+    }
+
+    @Override
+    public VoterEntity update(VoterEntity user) {
+        return userRepository.findOneAndReplace(and(eq("name",user.getName()),eq("password",user.getPassword())), user);
     }
 
     @Override

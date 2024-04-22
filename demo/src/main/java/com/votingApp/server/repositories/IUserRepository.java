@@ -10,5 +10,7 @@ public interface IUserRepository {
     VoterEntity checkUser(VoterEntity user);
 
     VoterEntity findBySessionId(ObjectId id);
+
+    VoterEntity update(VoterEntity voterEntity);
 }
 

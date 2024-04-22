@@ -1,24 +1,29 @@
 package com.votingApp.server.models;
 
 import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class VoterEntity {
+    @Id
     private ObjectId id;
     private String name;
     private String password;
+    @Field("sessions")
     private List<ObjectId> sessions;
 
     public VoterEntity() {
 
     }
 
-    public VoterEntity(ObjectId id, String name, String password) {
+    public VoterEntity(ObjectId id, String name, String password, List<ObjectId> sessions) {
         this.id = id;
-        this.sessions = sessions;
         this.name = name;
         this.password = password;
+        this.sessions = sessions;
     }
 
     public ObjectId getId() {

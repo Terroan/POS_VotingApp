@@ -12,8 +12,8 @@ public record VotingPostDTO(
         String voter,
         HashMap<String, Integer> votes) {
 
-    public VotingPostDTO(VotingPostEntity vpe, String voter) {
-        this(voter, vpe.getVotes());
+    public VotingPostDTO(VotingPostEntity vpe) {
+        this(vpe.getVoter(), vpe.getVotes());
     }
 
     public VotingPostEntity toVotingPostEntity() {

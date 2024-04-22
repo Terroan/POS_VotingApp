@@ -1,11 +1,13 @@
 package com.votingApp.server.models;
 
 import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class VotingSessionEntity {
+    @Id
     private ObjectId id;
     private String sessionID;
     private String sessionTitle;

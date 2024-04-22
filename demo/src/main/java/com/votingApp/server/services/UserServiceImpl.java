@@ -2,7 +2,6 @@ package com.votingApp.server.services;
 
 import com.votingApp.server.models.VoterEntity;
 import com.votingApp.server.repositories.IUserRepository;
-import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
 @Service

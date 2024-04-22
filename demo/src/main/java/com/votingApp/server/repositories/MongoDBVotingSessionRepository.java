@@ -7,7 +7,9 @@ import com.mongodb.WriteConcern;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.FindOneAndReplaceOptions;
+import com.mongodb.client.model.ReturnDocument;
 import com.votingApp.server.dtos.VotingPostDTO;
+import com.votingApp.server.dtos.VotingSessionIngressDTO;
 import com.votingApp.server.models.VoterEntity;
 import com.votingApp.server.models.VotingPostEntity;
 import com.votingApp.server.models.VotingQuestionEntity;
@@ -49,36 +51,38 @@ public class MongoDBVotingSessionRepository implements IVotingSessionRepository 
     }
 
     @Override
-    public VotingSessionEntity create(VotingSessionEntity votingSessionEntity) {
+    public ObjectId create(VotingSessionEntity votingSessionEntity) {
         votingSessionEntity.setId(new ObjectId());
         votingSessionCollection.insertOne(votingSessionEntity);
-        return votingSessionEntity;
+        return votingSessionEntity.getId();
     }
 
     @Override
-    public boolean startSession(ObjectId id) {
+    public String startSession(ObjectId id) {
         // find session by id
         VotingSessionEntity vse = votingSessionCollection.find(eq("_id", id)).first();
-        if(vse == null)
-            return false;
+        if(vse == null || vse.getSessionID() != null)
+            return null;
 
         // set session id -> "start" session
         String sessionID = getNewSessionID();
         while(read(sessionID) != null)
             sessionID = getNewSessionID();
         vse.setSessionID(sessionID);
-        return true;
+        votingSessionCollection.findOneAndReplace(eq("_id", id), vse);
+        return sessionID;
     }
 
     @Override
     public boolean endSession(ObjectId id) {
         // find session by id
         VotingSessionEntity vse = votingSessionCollection.find(eq("_id", id)).first();
-        if(vse == null)
+        if(vse == null || vse.getSessionID() == null)
             return false;
 
         // remove session id -> "end" session
-        vse.setSessionID("");
+        vse.setSessionID(null);
+        votingSessionCollection.findOneAndReplace(eq("_id", id), vse);
         return true;
     }
 
@@ -125,13 +129,11 @@ public class MongoDBVotingSessionRepository implements IVotingSessionRepository 
     }
 
     @Override
-    public boolean postResults(String sessionID, VotingPostDTO votingPostDTO) {
+    public VotingPostEntity postResults(String sessionID, VotingPostEntity votingPostEntity) {
         VotingSessionEntity vse = read(sessionID);
-        if(vse == null)
-            return false;
-        vse.getResults().add(votingPostDTO.toVotingPostEntity());
+        vse.getResults().add(votingPostEntity);
         votingSessionCollection.findOneAndReplace(eq("sessionId", sessionID), vse);
-        return true;
+        return votingPostEntity;
     }
 
     private String getNewSessionID() {

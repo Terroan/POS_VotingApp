@@ -13,7 +13,7 @@ public interface IVotingSessionRepository {
 
     String startSession(ObjectId id);
 
-    boolean endSession(ObjectId id);
+    VotingSessionEntity endSession(ObjectId id);
 
     VotingSessionEntity read(String sessionID);
 

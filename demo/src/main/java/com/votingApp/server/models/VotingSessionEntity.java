@@ -10,6 +10,7 @@ public class VotingSessionEntity {
     @Id
     private ObjectId id;
     private String sessionID;
+    private String creator;
     private String sessionTitle;
     private List<VotingQuestionEntity> questions;
     private List<VotingPostEntity> results;
@@ -18,8 +19,9 @@ public class VotingSessionEntity {
 
     }
 
-    public VotingSessionEntity(ObjectId id, String sessionTitle, ArrayList<VotingQuestionEntity> questions) {
+    public VotingSessionEntity(ObjectId id, String creator, String sessionTitle, ArrayList<VotingQuestionEntity> questions) {
         this.id = id;
+        this.creator = creator;
         this.sessionTitle = sessionTitle;
         this.questions = questions;
         this.results = new ArrayList<>();
@@ -46,6 +48,14 @@ public class VotingSessionEntity {
         return sessionTitle;
     }
 
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
     public void setSessionTitle(String sessionTitle) {
         this.sessionTitle = sessionTitle;
     }
@@ -66,5 +76,17 @@ public class VotingSessionEntity {
     public VotingSessionEntity setResults(List<VotingPostEntity> results) {
         this.results = results;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "VotingSessionEntity{" +
+                "id=" + id +
+                ", sessionID='" + sessionID + '\'' +
+                ", creator='" + creator + '\'' +
+                ", sessionTitle='" + sessionTitle + '\'' +
+                ", questions=" + questions +
+                ", results=" + results +
+                '}';
     }
 }

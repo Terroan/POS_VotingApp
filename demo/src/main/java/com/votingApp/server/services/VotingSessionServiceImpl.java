@@ -1,9 +1,6 @@
 package com.votingApp.server.services;
 
-import com.votingApp.server.dtos.VoterIngressDTO;
-import com.votingApp.server.dtos.VotingPostDTO;
-import com.votingApp.server.dtos.VotingSessionExgressDTO;
-import com.votingApp.server.dtos.VotingSessionIngressDTO;
+import com.votingApp.server.dtos.*;
 import com.votingApp.server.models.VoterEntity;
 import com.votingApp.server.models.VotingPostEntity;
 import com.votingApp.server.models.VotingSessionEntity;
@@ -61,10 +58,10 @@ public class VotingSessionServiceImpl implements IVotingSessionService {
     }
 
     @Override
-    public boolean endSession(ObjectId id, VoterIngressDTO voterIngressDTO) {
+    public VotingSessionExgressDTO endSession(ObjectId id, VoterIngressDTO voterIngressDTO) {
         VoterEntity ve = userRepository.checkUser(voterIngressDTO.toVoterEntity());
         if(ve == null)
-            return false;
+            return null;
 
         if(ve.getSessions() == null)
             ve.setSessions(new ArrayList<>());
@@ -73,18 +70,17 @@ public class VotingSessionServiceImpl implements IVotingSessionService {
             System.out.println(oid.toString() +" -> " + id.toString());
             if(oid.toString().equals(id.toString()))
             {
-                return votingSessionRepository.endSession(oid);
+                return new VotingSessionExgressDTO(votingSessionRepository.endSession(oid));
             }
         }
-        return false;
+        return null;
     }
 
     @Override
     public VotingSessionExgressDTO read(String id) { //session code
         VotingSessionEntity vse = votingSessionRepository.read(id);
-        VoterEntity ve = userRepository.findBySessionId(vse.getId());
         if(vse != null)
-            return new VotingSessionExgressDTO(vse, ve);
+            return new VotingSessionExgressDTO(vse);
         return null;
     }
 
@@ -92,10 +88,25 @@ public class VotingSessionServiceImpl implements IVotingSessionService {
     public List<VotingSessionIngressDTO> readAll() { return votingSessionRepository.readAll().stream().map(VotingSessionIngressDTO::new).toList(); }
 
     @Override
+    public List<VotingSessionExgressDTO> readAllByUser(VoterIngressDTO voterIngressDTO) { //session code
+        VoterEntity ve = userRepository.checkUser(voterIngressDTO.toVoterEntity());
+        if(ve != null) {
+            List<VotingSessionExgressDTO> list = new ArrayList<>();
+            for(VotingSessionEntity vse : votingSessionRepository.findAllById(ve.getSessions())) {
+                list.add(new VotingSessionExgressDTO(vse));
+            }
+            return list;
+        }
+        return null;
+    }
+
+    @Override
     public boolean delete(ObjectId id, VoterEntity creator) {
         VoterEntity ve = userRepository.checkUser(creator);
-        if(ve != null && ve.getSessions().contains(id))
+        if(ve != null && ve.getSessions().contains(id)) {
+            ve.getSessions().remove(id);
             return votingSessionRepository.delete(id);
+        }
         return false;
     }
 

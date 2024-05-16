@@ -19,10 +19,7 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.in;
@@ -61,7 +58,7 @@ public class MongoDBVotingSessionRepository implements IVotingSessionRepository 
     public String startSession(ObjectId id) {
         // find session by id
         VotingSessionEntity vse = votingSessionCollection.find(eq("_id", id)).first();
-        if(vse == null || vse.getSessionID() != null)
+        if(vse == null)
             return null;
 
         // set session id -> "start" session
@@ -74,16 +71,21 @@ public class MongoDBVotingSessionRepository implements IVotingSessionRepository 
     }
 
     @Override
-    public boolean endSession(ObjectId id) {
+    public VotingSessionEntity endSession(ObjectId id) {
         // find session by id
         VotingSessionEntity vse = votingSessionCollection.find(eq("_id", id)).first();
         if(vse == null || vse.getSessionID() == null)
-            return false;
+            return null;
 
         // remove session id -> "end" session
+        VotingSessionEntity tmp = new VotingSessionEntity(vse.getId(), vse.getCreator(), vse.getSessionTitle(), new ArrayList<>(vse.getQuestions()));
+        tmp.setResults(vse.getResults());
+
         vse.setSessionID(null);
+        vse.setResults(new ArrayList<>());
         votingSessionCollection.findOneAndReplace(eq("_id", id), vse);
-        return true;
+        System.out.println("From end method: " + tmp);
+        return tmp;
     }
 
     @Override
@@ -124,7 +126,8 @@ public class MongoDBVotingSessionRepository implements IVotingSessionRepository 
             return false;
 
         newVse.setId(vse.getId());
-        votingSessionCollection.findOneAndReplace(eq("id", id), newVse);
+        votingSessionCollection.findOneAndReplace(eq("_id", id), newVse);
+        System.out.println(vse.getId());
         return true;
     }
 
@@ -132,7 +135,8 @@ public class MongoDBVotingSessionRepository implements IVotingSessionRepository 
     public VotingPostEntity postResults(String sessionID, VotingPostEntity votingPostEntity) {
         VotingSessionEntity vse = read(sessionID);
         vse.getResults().add(votingPostEntity);
-        votingSessionCollection.findOneAndReplace(eq("sessionId", sessionID), vse);
+        System.out.println("From post method: "+vse);
+        votingSessionCollection.findOneAndReplace(eq("_id", vse.getId()), vse);
         return votingPostEntity;
     }
 

@@ -8,11 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record VotingSessionIngressDTO(
+        String creator,
         String title,
         List<VotingQuestionDTO> questions) {
 
     public VotingSessionIngressDTO(VotingSessionEntity vse) {
-        this(vse.getSessionTitle(), vse.getQuestions().stream().map(VotingQuestionDTO::new).toList());
+        this(vse.getCreator(), vse.getSessionTitle(), vse.getQuestions().stream().map(VotingQuestionDTO::new).toList());
     }
 
     public VotingSessionEntity toVotingSessionEntity() {
@@ -20,6 +21,6 @@ public record VotingSessionIngressDTO(
         for (VotingQuestionDTO questionDTO : questions) {
             questionEntities.add(questionDTO.toVotingQuestionEntity());
         }
-        return new VotingSessionEntity(new ObjectId(), title, questionEntities);
+        return new VotingSessionEntity(new ObjectId(), creator, title, questionEntities);
     }
 }

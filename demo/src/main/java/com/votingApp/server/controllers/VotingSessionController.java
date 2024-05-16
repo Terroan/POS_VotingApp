@@ -64,11 +64,12 @@ public class VotingSessionController {
 
     // end session
     @PostMapping("session/end/{id}")
-    public ResponseEntity<Boolean> endSession(@PathVariable String id, @RequestBody VoterIngressDTO voterIngressDTO) {
+    public ResponseEntity<VotingSessionExgressDTO> endSession(@PathVariable String id, @RequestBody VoterIngressDTO voterIngressDTO) {
         try {
-            boolean tmp = votingSessionService.endSession(new ObjectId(id), voterIngressDTO);
-            if(!tmp)
+            VotingSessionExgressDTO tmp = votingSessionService.endSession(new ObjectId(id), voterIngressDTO);
+            if(tmp == null)
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            System.out.println(tmp);
             return ResponseEntity.ok(tmp);
         }
         catch(Exception e) {
@@ -78,7 +79,7 @@ public class VotingSessionController {
     }
 
     //Post results to a session, return 404 if session not found
-    @PostMapping("session/{sessionID}/results")
+    @PostMapping("session/results/{sessionID}")
     public ResponseEntity<VotingPostDTO> postResults(@PathVariable String sessionID, @RequestBody VotingPostDTO votingPostDTO) {
         try {
             VotingSessionExgressDTO votingSessionExgressDTO = votingSessionService.read(sessionID);
@@ -86,8 +87,17 @@ public class VotingSessionController {
             return ResponseEntity.ok(votingSessionService.postResults(sessionID, votingPostDTO));
         }
         catch(Exception e) {
+            System.out.println(e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
+    }
+
+    // get all sessions for a specific user
+    @PostMapping("sessions/user")
+    public ResponseEntity<List<VotingSessionExgressDTO>> readUserSessions(@RequestBody VoterIngressDTO voterIngressDTO) {
+        List<VotingSessionExgressDTO> votingSessionExgressDTOs = votingSessionService.readAllByUser(voterIngressDTO);
+        if (votingSessionExgressDTOs == null) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        return ResponseEntity.ok(votingSessionExgressDTOs);
     }
 
     //Get a specific session by id
@@ -119,12 +129,12 @@ public class VotingSessionController {
 
     //Update session
     @PutMapping("session/{id}")
-    public  ResponseEntity<HttpPutRequest> updateVotingSession(@PathVariable String id, @RequestBody HttpPutRequest httpPutRequest) {
+    public  ResponseEntity<HttpPostRequest> updateVotingSession(@PathVariable String id, @RequestBody HttpPostRequest httpPostRequest) {
         try {
-            boolean tmp = votingSessionService.update(new ObjectId(id), httpPutRequest.getVotingSessionIngressDTO().toVotingSessionEntity(),
-                    httpPutRequest.getVoterIngressDTO().toVoterEntity());
+            boolean tmp = votingSessionService.update(new ObjectId(id), httpPostRequest.getVotingSessionDTO().toVotingSessionEntity(),
+                    httpPostRequest.getVoterDTO().toVoterEntity());
             if (!tmp) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); // session id is not in users list
-            return ResponseEntity.ok(httpPutRequest);
+            return ResponseEntity.ok(httpPostRequest);
         }
         catch(Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

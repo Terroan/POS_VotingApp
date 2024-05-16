@@ -1,9 +1,6 @@
 package com.votingApp.server.services;
 
-import com.votingApp.server.dtos.VoterIngressDTO;
-import com.votingApp.server.dtos.VotingPostDTO;
-import com.votingApp.server.dtos.VotingSessionExgressDTO;
-import com.votingApp.server.dtos.VotingSessionIngressDTO;
+import com.votingApp.server.dtos.*;
 import com.votingApp.server.models.VoterEntity;
 import com.votingApp.server.models.VotingPostEntity;
 import com.votingApp.server.models.VotingSessionEntity;
@@ -19,8 +16,10 @@ public interface IVotingSessionService {
 
     List<VotingSessionIngressDTO> readAll();
 
+    List<VotingSessionExgressDTO> readAllByUser(VoterIngressDTO voterIngressDTO);
+
     String startSession(ObjectId id, VoterIngressDTO voterIngressDTO);
-    boolean endSession(ObjectId id, VoterIngressDTO voterIngressDTO);
+    VotingSessionExgressDTO endSession(ObjectId id, VoterIngressDTO voterIngressDTO);
 
     boolean update(ObjectId id, VotingSessionEntity votingSessionEntity, VoterEntity voterEntity);
 

@@ -4,35 +4,35 @@ import com.votingApp.server.dtos.VoterIngressDTO;
 import com.votingApp.server.dtos.VotingSessionIngressDTO;
 
 public class HttpPostRequest {
-    private VotingSessionIngressDTO votingSessionIngressDTO;
-    private VoterIngressDTO voterIngressDTO;
+    private VotingSessionIngressDTO votingSession;
+    private VoterIngressDTO voter;
 
-    public HttpPostRequest(VotingSessionIngressDTO votingSessionIngressDTO, VoterIngressDTO voterIngressDTO) {
-        this.votingSessionIngressDTO = votingSessionIngressDTO;
-        this.voterIngressDTO = voterIngressDTO;
+    public HttpPostRequest(VotingSessionIngressDTO votingSession, VoterIngressDTO voter) {
+        this.votingSession = votingSession;
+        this.voter = voter;
     }
 
     public VotingSessionIngressDTO getVotingSessionDTO() {
-        return votingSessionIngressDTO;
+        return votingSession;
     }
 
     public void setVotingSessionDTO(VotingSessionIngressDTO votingSessionIngressDTO) {
-        this.votingSessionIngressDTO = votingSessionIngressDTO;
+        this.votingSession = votingSessionIngressDTO;
     }
 
     public VoterIngressDTO getVoterDTO() {
-        return voterIngressDTO;
+        return voter;
     }
 
     public void setVoterDTO(VoterIngressDTO voterIngressDTO) {
-        this.voterIngressDTO = voterIngressDTO;
+        this.voter = voterIngressDTO;
     }
 
     @Override
     public String toString() {
         return "HttpRequest{" +
-                "votingSessionDTO=" + votingSessionIngressDTO +
-                ", voterDTO=" + voterIngressDTO +
+                "votingSession##=" + votingSession +
+                ", voter=" + voter +
                 '}';
     }
 }

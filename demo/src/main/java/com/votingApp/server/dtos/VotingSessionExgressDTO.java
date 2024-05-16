@@ -9,11 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record VotingSessionExgressDTO(
+        String id,
         String title,
-        VoterExgressDTO creator,
-        List<VotingQuestionDTO> questions) {
+        String creator,
+        List<VotingQuestionDTO> questions,
+        List<VotingPostDTO> results) {
 
-    public VotingSessionExgressDTO(VotingSessionEntity vse, VoterEntity creator) {
-        this(vse.getSessionTitle(), new VoterExgressDTO(creator), vse.getQuestions().stream().map(VotingQuestionDTO::new).toList());
+    public VotingSessionExgressDTO(VotingSessionEntity vse) {
+        this(vse.getId().toString(), vse.getSessionTitle(), vse.getCreator(), vse.getQuestions().stream().map(VotingQuestionDTO::new).toList(),
+                vse.getResults().stream().map(VotingPostDTO::new).toList());
     }
 }

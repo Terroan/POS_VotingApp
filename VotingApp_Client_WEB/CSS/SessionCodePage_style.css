@@ -1,0 +1,29 @@
+body {
+    font-family: "Showcard Gothic", sans-serif;
+    background-color: #FFD27EB0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.main-container {
+    text-align: center;
+}
+
+.session-id {
+    font-size: 130px;
+    font-weight: bold;
+    margin-top: 50px;
+}
+
+.end-session-button {
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 50px;
+    padding: 10px 20px;
+    background-color: #66ED2929;
+    border: none;
+    cursor: pointer;
+}

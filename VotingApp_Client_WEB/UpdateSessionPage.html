@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Session</title>
+    <link rel="stylesheet" href="CSS/UpdateSessionPage_style.css">
+</head>
+<body>
+    <div class="main-container">
+        <div class="group-box">
+            <h2>Information</h2>
+            <div class="input-grid">
+                <label for="tbCreatorName">Creator name:</label>
+                <input type="text" id="tbCreatorName" name="creatorName">
+                
+                <label for="tbSessionName">Session title:</label>
+                <input type="text" id="tbSessionName" name="sessionName">
+                
+                <div class="button-group">
+                    <button id="btnUpdateSession">Update session</button>
+                    <button id="btnGoBackToStart">Go back</button>
+                </div>
+                
+                <div class="button-group">
+                    <button id="btnDeleteSession">Delete session</button>
+                    <button id="btnStartSession">Start</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="group-box" id="questions-group">
+            <h2>Questions</h2>
+            <ul id="lvQuestions"></ul>
+            <div class="button-group">
+                <button id="btnAddQuestion">Add question</button>
+                <button id="btnDeleteQuestion" disabled>Remove question</button>
+            </div>
+        </div>
+
+        <div class="group-box" id="options-group" style="display: none;">
+            <h2>Options</h2>
+            <ul id="lvOptions"></ul>
+            <div class="button-group">
+                <button id="btnAddOption">Add option</button>
+                <button id="btnDeleteOption" disabled>Remove option</button>
+                <button id="btnOptionGoBack">Go back</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="JS/UpdateSessionPage_script.js"></script>
+</body>
+</html>

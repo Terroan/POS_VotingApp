@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Session</title>
+    <link rel="stylesheet" href="CSS/CreateSessionPage_style.css">
+</head>
+<body>
+    <div class="main-container">
+        <div class="group-box">
+            <div class="group-box-header">Information</div>
+            <div class="group-box-content">
+                <label for="tbCreatorName" class="label">Creator name:</label>
+                <input type="text" id="tbCreatorName" class="text-box" />
+                
+                <label for="tbSessionName" class="label">Session title:</label>
+                <input type="text" id="tbSessionName" class="text-box large" />
+
+                <button id="btnCreateSession" class="button large">Create Session</button>
+                <button id="btnGoBackToStart" class="button">Go back</button>
+            </div>
+        </div>
+
+        <div class="group-box" id="gbQuestions">
+            <div class="group-box-header">Questions</div>
+            <div class="group-box-content">
+                <ul id="lvQuestions" class="list-view"></ul>
+                <div class="button-panel">
+                    <button id="btnAddQuestion" class="button">Add question</button>
+                    <button id="btnDeleteQuestion" class="button" disabled>Remove question</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="group-box" id="gbOptions">
+            <div class="group-box-header">Options</div>
+            <div class="group-box-content">
+                <ul id="lvOptions" class="list-view"></ul>
+                <div class="button-panel">
+                    <button id="btnAddOption" class="button">Add option</button>
+                    <button id="btnDeleteOption" class="button" disabled>Remove option</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="JS/CreateSessionPage_script.js" type="module"></script>
+</body>
+</html>

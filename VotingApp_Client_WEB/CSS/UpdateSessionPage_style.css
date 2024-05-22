@@ -1,0 +1,82 @@
+body {
+    font-family: "Showcard Gothic", sans-serif;
+    background-color: #FFD27EB0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.main-container {
+    width: 60%;
+}
+
+.group-box {
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.group-box h2 {
+    margin-top: 0;
+}
+
+.input-grid {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 10px;
+    align-items: center;
+}
+
+.input-grid label {
+    margin-right: 10px;
+}
+
+.input-grid input {
+    padding: 5px;
+    border: 1px solid #FF090A0E;
+    background-color: #33EA0404;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+button {
+    padding: 10px;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+#btnUpdateSession {
+    background-color: #6629F90B;
+}
+
+#btnGoBackToStart {
+    background-color: #FFBDAEBC;
+}
+
+#btnDeleteSession,
+#btnStartSession {
+    background-color: #66ED2929;
+}
+
+#btnAddQuestion,
+#btnAddOption {
+    background-color: #6629F90B;
+}
+
+#btnDeleteQuestion,
+#btnDeleteOption {
+    background-color: #66ED2929;
+}
+
+#btnOptionGoBack {
+    background-color: #FFBDAEBC;
+}

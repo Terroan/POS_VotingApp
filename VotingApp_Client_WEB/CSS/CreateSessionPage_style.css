@@ -1,0 +1,79 @@
+body {
+    font-family: "Showcard Gothic", sans-serif;
+    background-color: #FFD27EB0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-size: 16px;
+}
+
+.main-container {
+    width: 80%;
+}
+
+.group-box {
+    border: 1px solid #000;
+    margin: 10px 0;
+    padding: 10px;
+}
+
+.group-box-header {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.group-box-content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.label {
+    margin: 10px;
+    min-width: 100px;
+}
+
+.text-box {
+    margin: 10px;
+    padding: 5px;
+    border: 1px solid #FF090A0E;
+    background-color: #33EA0404;
+}
+
+.text-box.large {
+    width: 500px;
+    height: 25px;
+}
+
+.button {
+    margin: 10px;
+    padding: 10px;
+    background-color: #6629F90B;
+    border: none;
+    cursor: pointer;
+}
+
+.button.large {
+    width: 100px;
+    height: 100px;
+}
+
+.hidden {
+    display: none;
+}
+
+.list-view {
+    width: 100%;
+    margin: 10px 0;
+    background-color: #FFDCD267;
+    list-style-type: none;
+    padding: 0;
+}
+
+.button-panel {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}

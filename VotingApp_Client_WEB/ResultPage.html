@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistics</title>
+    <link rel="stylesheet" href="CSS/ResultPage_style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="main-container">
+        <div class="header">
+            <label id="lblCreator" class="label">Creator:</label>
+            <label id="lblSurvey" class="label">Survey:</label>
+            <select id="cbQuestions" class="dropdown"></select>
+            <label id="lblQuestion" class="label">What is the equivalent of happiness?</label>
+            <button id="btnGoBackToStart" class="back-button">Go back</button>
+        </div>
+        <div class="chart-container">
+            <canvas id="lvcChart"></canvas>
+        </div>
+    </div>
+
+    <script src="JS/ResultPage_script.js"></script>
+</body>
+</html>

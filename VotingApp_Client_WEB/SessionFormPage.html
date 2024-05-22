@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Session</title>
+    <link rel="stylesheet" href="CSS/SessionFormPage_style.css">
+</head>
+<body>
+    <div class="main-container">
+        <div class="group-box">
+            <h2>Information</h2>
+            <div class="input-grid">
+                <label for="lblSessionName">Session title:</label>
+                <label id="lblSessionName" class="session-label"></label>
+                
+                <label for="lblCreatorName">Creator name:</label>
+                <label id="lblCreatorName" class="creator-label"></label>
+                
+                <label for="tbSurveyTaker">Answered by:</label>
+                <input type="text" id="tbSurveyTaker" name="surveyTaker">
+                
+                <button id="btnFinish" class="finish-button">Finish</button>
+                <button id="btnGoBackToStart" class="back-button">Go back</button>
+            </div>
+        </div>
+
+        <div class="group-box" id="questions-group">
+            <h2>Questions</h2>
+            <ul id="lvQuestions"></ul>
+        </div>
+
+        <div class="group-box" id="options-group" style="display: none;">
+            <h2>Options</h2>
+            <ul id="lbOptions"></ul>
+            <button id="btnOptionGoBack" class="back-button">Go back</button>
+        </div>
+    </div>
+
+    <script src="JS/SessionFormPage_schript.js"></script>
+</body>
+</html>

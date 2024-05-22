@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="CSS/LoginPage_style.css">
+</head>
+<body>
+    <div class="main-container">
+        <div class="stack-panel vertical">
+            <div class="text-block large">Voting App</div>
+            <div class="text-block medium">Login</div>
+
+            <div class="stack-panel vertical">
+                <div class="stack-panel horizontal">
+                    <div class="text-block small">Username</div>
+                    <input type="text" id="tbUsername" class="text-box"/>
+                </div>
+
+                <div class="stack-panel horizontal">
+                    <div class="text-block small">Password</div>
+                    <input type="password" id="pwbPassword" class="text-box"/>
+                </div>
+            </div>
+
+            <div class="stack-panel horizontal">
+                <button id="btnLogin" class="button" disabled>Login</button>
+                <button id="btnSignIn" class="button danger" disabled>Sign in</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="JS/LoginPage_script.js" type="module"></script>
+</body>
+</html>

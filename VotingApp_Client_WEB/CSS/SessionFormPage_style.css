@@ -1,0 +1,70 @@
+body {
+    font-family: "Showcard Gothic", sans-serif;
+    background-color: #FFD27EB0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.main-container {
+    width: 60%;
+}
+
+.group-box {
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.group-box h2 {
+    margin-top: 0;
+}
+
+.input-grid {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 10px;
+    align-items: center;
+}
+
+.input-grid label {
+    margin-right: 10px;
+}
+
+.input-grid input, .session-label, .creator-label {
+    padding: 5px;
+    border: 1px solid #FF090A0E;
+    background-color: #33EA0404;
+}
+
+button {
+    padding: 10px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+.finish-button {
+    background-color: #6629F90B;
+}
+
+.back-button {
+    background-color: #FFBDAEBC;
+}
+
+#lvQuestions, #lbOptions {
+    background-color: #FFDCD267;
+    margin: 10px 0;
+    padding: 10px;
+    list-style-type: none;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+}

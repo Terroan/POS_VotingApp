@@ -26,7 +26,7 @@ namespace VotingApp_Client_WPF
         public MainWindow()
         {
             InitializeComponent();
-            MainFrame.Navigate(new StartPage());
+            MainFrame.Navigate(new LoginPage()); // navigate straight to loginpage
         }
     }
 }

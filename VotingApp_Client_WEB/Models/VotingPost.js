@@ -1,8 +1,8 @@
 // Define the VotingPost class
-class VotingPost {
+export class VotingPost {
     constructor() {
-      this._voter = null;
-      this._votes = null;
+      this._voter = "";
+      this._votes = {};
     }
   
     get Voter() {
@@ -20,5 +20,13 @@ class VotingPost {
     set Votes(value) {
       this._votes = value;
     }
+
+    // Method to convert the object to JSON with custom property names
+    toJSON() {
+      return {
+          voter: this._voter,
+          votes: this._votes
+      };
+  }
   }
   

@@ -149,16 +149,11 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <ListView x:Name="lvOptions" 
+                <ListBox x:Name="lbOptions" 
                           Grid.Row="0" 
                           Margin="10" 
                           Background="#FFDCD267">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn/>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
+                </ListBox>
 
                 <StackPanel 
                     Grid.Row="1" 

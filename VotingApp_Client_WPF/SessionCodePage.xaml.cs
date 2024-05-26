@@ -1,19 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
+using System.Reflection;
 using System.Text.Json;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace VotingApp_Client_WPF
 {
@@ -22,32 +12,58 @@ namespace VotingApp_Client_WPF
     /// </summary>
     public partial class SessionCodePage : Page
     {
-        private string _sessionID;
-        public SessionCodePage(string sessionID)
+        private string _objectId;
+        private VoterEgress _user;
+        public SessionCodePage(string sessionID, string objectId, VoterEgress user)
         {
             InitializeComponent();
+            _user = user;
+            _objectId = objectId;
+
+            // show session id in label
             lblSessionID.Content = sessionID;
-            _sessionID = sessionID;
         }
 
+        // end session 
         private async void btnEndSession_Click(object sender, RoutedEventArgs e)
         {
-            // Erstellen einer HttpClient-Instanz
-            using (HttpClient client = new HttpClient())
-            {
-                // Senden der POST-Anfrage
-                HttpResponseMessage response = await client.GetAsync("http://localhost:5000/api/session/"+_sessionID);
+            btnEndSession.IsEnabled = false; //click only once
 
-                // Überprüfen der Antwort auf Erfolg
+            try
+            {
+                // send post request
+                HttpResponseMessage response = await HttpRequestHandler.SendHttpRequestAsync(RequestType.EndSession, JsonSerializer.Serialize(_user), _objectId);
+
+                // check if request was successful
                 if (response.IsSuccessStatusCode)
                 {
-                    MainFrame.Navigate(new ResultPage(response.Content.ReadAsStream()));
+                    var stream = await response.Content.ReadAsStreamAsync();
+                    var votingSession = await JsonSerializer.DeserializeAsync<VotingSessionIngress>(stream);
+                    MainFrame.Navigate(new ResultPage(votingSession, _user));
                 }
                 else
                 {
-                    MessageBox.Show("Fehler! Statuscode: " + response.StatusCode);
+                    ShowErrorMessage("Fehler! Statuscode: " + response.StatusCode);
                 }
             }
+            catch (HttpRequestException hre)
+            {
+                ShowErrorMessage("Server nicht erreichbar!");
+            }
+            catch (Exception ex)
+            {
+                ShowErrorMessage(ex.Message);
+            }
+            finally
+            {
+                btnEndSession.IsEnabled = true;
+            }    
+        }
+
+        // show error message
+        private void ShowErrorMessage(string msg)
+        {
+            MessageBox.Show(msg, Assembly.GetEntryAssembly()?.GetName().Name, MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }

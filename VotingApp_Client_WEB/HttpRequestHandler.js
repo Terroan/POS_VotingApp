@@ -12,19 +12,21 @@ export const RequestType = {
     UpdateSession: 'UpdateSession'
 };
 
+const serverPort = "5010";
+
 // Define the HttpRequestHandler class
 export class HttpRequestHandler {
     // API Routes
-    static createUserRoute = "http://localhost:5000/api/user/create"; //post
-    static loginUserRoute = "http://localhost:5000/api/user/login"; //post
-    static createSessionRoute = "http://localhost:5000/api/session"; //post
-    static startSessionRoute = "http://localhost:5000/api/session/start/"; //post
-    static endSessionRoute = "http://localhost:5000/api/session/end/"; //post
-    static postResultsRoute = "http://localhost:5000/api/session/results/"; //post
-    static fetchSessionsRoute = "http://localhost:5000/api/sessions/user"; //post
-    static fetchSessionRoute = "http://localhost:5000/api/session/"; // get
-    static deleteSessionRoute = "http://localhost:5000/api/session/"; //delete
-    static updateSessionRoute = "http://localhost:5000/api/session/"; //put
+    static createUserRoute = "http://localhost:"+serverPort+"/api/user/create"; //post
+    static loginUserRoute = "http://localhost:"+serverPort+"/api/user/login"; //post
+    static createSessionRoute = "http://localhost:"+serverPort+"/api/session"; //post
+    static startSessionRoute = "http://localhost:"+serverPort+"/api/session/start/"; //post
+    static endSessionRoute = "http://localhost:"+serverPort+"/api/session/end/"; //post
+    static postResultsRoute = "http://localhost:"+serverPort+"/api/session/results/"; //post
+    static fetchSessionsRoute = "http://localhost:"+serverPort+"/api/sessions/user"; //post
+    static fetchSessionRoute = "http://localhost:"+serverPort+"/api/session/"; // get
+    static deleteSessionRoute = "http://localhost:"+serverPort+"/api/session/"; //delete
+    static updateSessionRoute = "http://localhost:"+serverPort+"/api/session/"; //put
 
     static async sendHttpRequestAsync(requestType, content, routeExtension) {
         // decide which route to use
@@ -97,10 +99,11 @@ export class HttpRequestHandler {
                 requestOptions.method = 'POST';
                 break;
             case RequestType.UpdateSession:
-                requestOptions.method = 'POST';
+                requestOptions.method = 'PUT';
                 break;
             case RequestType.FetchSession:
                 requestOptions.method = 'GET';
+                requestOptions.body = null;
                 break;
             case RequestType.DeleteSession:
                 requestOptions.method = 'DELETE';

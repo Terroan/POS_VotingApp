@@ -13,7 +13,7 @@ body {
 }
 
 .group-box {
-    background-color: white;
+    background-color: rgb(237, 185, 185);
     border: 1px solid #ccc;
     padding: 20px;
     margin: 10px 0;
@@ -36,9 +36,13 @@ body {
 }
 
 .input-grid input {
-    padding: 5px;
-    border: 1px solid #FF090A0E;
-    background-color: #33EA0404;
+    padding: 10px;
+    border: 1px solid #333; /* Dunklere Farbe für besseren Kontrast */
+    background-color: #ffebcc; /* Hellgelber Hintergrund für besseren Kontrast */
+    color: #000; /* Schwarzer Text für besseren Kontrast */
+    font-family: "Showcard Gothic", sans-serif;
+    border-radius: 5px; /* Abgerundete Ecken */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Leichter Schatten */
 }
 
 .button-group {
@@ -52,31 +56,51 @@ button {
     border: none;
     color: white;
     cursor: pointer;
+    font-family: "Showcard Gothic", sans-serif;
+    border-radius: 5px; /* Abgerundete Ecken */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Leichter Schatten */
 }
 
 #btnUpdateSession {
-    background-color: #6629F90B;
+    background-color: #4CAF50; /* Grün mit weißem Text */
+    color: white;
 }
 
 #btnGoBackToStart {
-    background-color: #FFBDAEBC;
+    background-color: #008CBA; /* Blau mit weißem Text */
+    color: white;
 }
 
 #btnDeleteSession,
 #btnStartSession {
-    background-color: #66ED2929;
+    background-color: #f44336; /* Rot mit weißem Text */
+    color: white;
 }
 
 #btnAddQuestion,
 #btnAddOption {
-    background-color: #6629F90B;
+    background-color: #FF9800; /* Orange mit weißem Text */
+    color: white;
 }
 
 #btnDeleteQuestion,
 #btnDeleteOption {
-    background-color: #66ED2929;
+    background-color: #9C27B0; /* Lila mit weißem Text */
+    color: white;
 }
 
 #btnOptionGoBack {
-    background-color: #FFBDAEBC;
+    background-color: #FF5722; /* Dunkelorange mit weißem Text */
+    color: white;
+}
+
+#lbSessions {
+    max-height: 300px; /* Maximale Höhe der Liste */
+    overflow-y: auto; /* Vertikales Scrollen */
+    border: 1px solid #ccc; /* Optional: Rahmen für die Liste */
+    padding: 10px; /* Optional: Innenabstand */
+    background-color: #fff; /* Weißer Hintergrund für besseren Kontrast */
+    font-family: "Showcard Gothic", sans-serif; /* Schriftart für die Liste */
+    border-radius: 5px; /* Abgerundete Ecken */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Leichter Schatten */
 }

@@ -29,13 +29,16 @@ body {
 .dropdown {
     margin: 10px 0;
     padding: 5px;
+    background-color: rgb(201, 198, 105);
+    font-family: "Showcard Gothic", sans-serif;
 }
 
 .back-button {
     margin-top: 10px;
     padding: 10px;
     background-color: #FFBDAEBC;
-    border: none;
+    border: 1px solid black;
+    font-family: "Showcard Gothic", sans-serif;
     cursor: pointer;
     width: 93px;
 }

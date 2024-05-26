@@ -13,7 +13,7 @@ body {
 }
 
 .group-box {
-    background-color: white;
+    background-color: rgb(237, 185, 185);
     border: 1px solid #ccc;
     padding: 20px;
     margin: 10px 0;
@@ -36,9 +36,13 @@ body {
 }
 
 .input-grid input, .session-label, .creator-label {
-    padding: 5px;
-    border: 1px solid #FF090A0E;
-    background-color: #33EA0404;
+    padding: 10px;
+    border: 1px solid #333; /* Dunklere Farbe für besseren Kontrast */
+    background-color: #ffebcc; /* Hellgelber Hintergrund für besseren Kontrast */
+    color: #000; /* Schwarzer Text für besseren Kontrast */
+    font-family: "Showcard Gothic", sans-serif;
+    border-radius: 5px; /* Abgerundete Ecken */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Leichter Schatten */
 }
 
 button {
@@ -46,15 +50,17 @@ button {
     border: none;
     color: white;
     cursor: pointer;
-    margin: 10px 0;
+    font-family: "Showcard Gothic", sans-serif;
+    border-radius: 5px; /* Abgerundete Ecken */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Leichter Schatten */
 }
 
 .finish-button {
-    background-color: #6629F90B;
+    background-color: #4CAF50;
 }
 
 .back-button {
-    background-color: #FFBDAEBC;
+    background-color: #008CBA;
 }
 
 #lvQuestions, #lbOptions {

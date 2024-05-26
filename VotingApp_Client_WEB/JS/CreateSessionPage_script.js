@@ -3,7 +3,6 @@ import { HttpPostRequest } from '/Models/HttpPostRequest.js';
 import { VotingQuestion } from '/Models/VotingQuestion.js'; 
 import { VotingSessionEgress } from '/Models/VotingSessionEgress.js'; 
 
-
 var session = new VotingSessionEgress();
 var user = JSON.parse(localStorage.getItem('user'));
 var postRequest = new HttpPostRequest(session, user);
@@ -14,6 +13,13 @@ function btnAddQuestion_Click() {
     tmp.type = 'text';
     tmp.style.width = '300px';
     tmp.style.height = '25px';
+    tmp.style.padding = '10px';
+    tmp.style.border = '1px solid #333';
+    tmp.style.backgroundColor = '#ffebcc';
+    tmp.style.color = '#000';
+    tmp.style.fontFamily = '"Showcard Gothic", sans-serif';
+    tmp.style.borderRadius = '5px';
+    tmp.style.boxShadow = '2px 2px 5px rgba(0, 0, 0, 0.1)';
     tmp.addEventListener('focus', tbQuestion_GotFocus);
     tmp.addEventListener('blur', tbQuestion_LostFocus);
     document.getElementById('lvQuestions').appendChild(tmp);
@@ -40,13 +46,19 @@ function btnAddOption_Click() {
         tmp.type = 'text';
         tmp.style.width = '300px';
         tmp.style.height = '25px';
+        tmp.style.padding = '10px';
+        tmp.style.border = '1px solid #333';
+        tmp.style.backgroundColor = '#ffebcc';
+        tmp.style.color = '#000';
+        tmp.style.fontFamily = '"Showcard Gothic", sans-serif';
+        tmp.style.borderRadius = '5px';
+        tmp.style.boxShadow = '2px 2px 5px rgba(0, 0, 0, 0.1)';
         tmp.addEventListener('focus', tbOption_GotFocus);
         tmp.addEventListener('blur', tbOption_LostFocus);
         document.getElementById('lvOptions').appendChild(tmp);
     }
     updateOptionButtonsState(); // Enable/disable option buttons after adding an option
 }
-
 
 function lvOptions_SelectionChanged() {
     var selectedIndex = document.getElementById('lvOptions').selectedIndex;
@@ -111,6 +123,13 @@ function ShowOptions(questionIndex) {
         optionElement.value = option;
         optionElement.style.width = '300px';
         optionElement.style.height = '25px';
+        optionElement.style.padding = '10px';
+        optionElement.style.border = '1px solid #333';
+        optionElement.style.backgroundColor = '#ffebcc';
+        optionElement.style.color = '#000';
+        optionElement.style.fontFamily = '"Showcard Gothic", sans-serif';
+        optionElement.style.borderRadius = '5px';
+        optionElement.style.boxShadow = '2px 2px 5px rgba(0, 0, 0, 0.1)';
         optionElement.addEventListener('focus', tbOption_GotFocus);
         optionElement.addEventListener('blur', tbOption_LostFocus);
         lvOptions.appendChild(optionElement);

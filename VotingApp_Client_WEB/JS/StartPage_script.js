@@ -13,10 +13,12 @@ async function fetchUserSessions() {
         var response = await HttpRequestHandler.sendHttpRequestAsync(RequestType.FetchSessions, JSON.stringify(user), "");
         if (response.ok) {
             sessions = await response.json();
-            console.log(sessions);
             sessions.forEach(function(vs) {
                 var listItem = document.createElement('li');
-                listItem.textContent = vs.title;
+                if(vs.title == '' || vs.title == null)
+                    listItem.textContent = "...";
+                else
+                    listItem.textContent = vs.title;
                 listItem.style.fontSize = '16px'; // Increase font size
                 listItem.style.padding = '5px 0'; // Add padding
                 document.getElementById('lbSessions').appendChild(listItem);
@@ -38,10 +40,12 @@ function createSessionClick() {
 async function joinSessionClick() {
     var sessionID = document.getElementById('tbSessionCode').value;
     document.getElementById('btnJoinSession').disabled = true;
+    console.log(sessionID);
     try {
         var response = await HttpRequestHandler.sendHttpRequestAsync(RequestType.FetchSession, "", sessionID);
         if (response.ok) {
-            var sessionData = await response.json();
+            localStorage.setItem("votingSession", await response.text());
+            localStorage.setItem("sessionId", sessionID)
             window.location.href = 'sessionFormPage.html?sessionID=' + sessionID.toLowerCase();
         } else {
             document.getElementById('btnJoinSession').disabled = false;
@@ -49,6 +53,7 @@ async function joinSessionClick() {
         }
     } catch (error) {
         document.getElementById('btnJoinSession').disabled = false;
+        console.log(error);
         showErrorMessage("An error occurred while processing your request.");
     }
 }

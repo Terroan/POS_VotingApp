@@ -1,205 +1,214 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿    using System;
+    using System.Net.Http;
+    using System.Reflection;
+    using System.Text.Json;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Input;
 
-namespace VotingApp_Client_WPF
-{
-    /// <summary>
-    /// Interaktionslogik für CreateSessionPage.xaml
-    /// </summary>
-    public partial class CreateSessionPage : Page
+    namespace VotingApp_Client_WPF
     {
-        private VotingSession? _session = new();
-
-        public CreateSessionPage()
+        /// <summary>
+        /// Interaktionslogik für CreateSessionPage.xaml
+        /// </summary>
+        public partial class CreateSessionPage : Page
         {
-            InitializeComponent();
-        }
+            private VotingSessionEgress _session = new();
+            private VoterEgress? _user;
 
-        private void btnAddQuestion_Click(object sender, RoutedEventArgs e)
-        {
-            _session?.Questions?.Add(new VotingQuestion());
-            TextBox tmp = new();
-            tmp.Width = 300;
-            tmp.Height = 25;
-            tmp.GotFocus += tbQuestion_GotFocus;
-            tmp.LostFocus += tbQuestion_LostFocus;
-            lvQuestions.Items.Add(tmp);
-        }
-
-        private void btnDeleteQuestion_Click(object sender, RoutedEventArgs e)
-        {
-            _session?.Questions?.RemoveAt(lvQuestions.SelectedIndex);
-            lvQuestions.Items.RemoveAt(lvQuestions.SelectedIndex);
-        }
-
-        private void lvQuestions_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (lvQuestions.SelectedIndex != -1)
+            public CreateSessionPage(VoterEgress user)
             {
-                btnDeleteQuestion.IsEnabled = true;
+                InitializeComponent();
+                _user = user;   
             }
-            else
+
+            // add question to session
+            private void btnAddQuestion_Click(object sender, RoutedEventArgs e)
             {
-                btnDeleteQuestion.IsEnabled = false;
-            }
-        }
-
-        private void btnAddOption_Click(object sender, RoutedEventArgs e)
-        {
-            _session?.Questions?[lvQuestions.SelectedIndex]?.Options?.Add("");
-            TextBox tmp = new();
-            tmp.Width = 300;
-            tmp.Height = 25;
-            tmp.GotFocus += tbOption_GotFocus;
-            tmp.LostFocus += tbOption_LostFocus;
-            lvOptions.Items.Add(tmp);
-        }
-
-        private void btnDeleteOption_Click(object sender, RoutedEventArgs e)
-        {
-            _session?.Questions?[lvQuestions.SelectedIndex].Options.RemoveAt(lvOptions.SelectedIndex);
-            lvOptions.Items.RemoveAt(lvOptions.SelectedIndex);
-        }
-
-        private void lvOptions_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (lvOptions.SelectedIndex != -1)
-            {
-                btnDeleteOption.IsEnabled = true;
-
-            }
-            else
-            {
-                btnDeleteOption.IsEnabled = false;
-            }
-        }
-
-        private void tbQuestion_LostFocus(object sender, RoutedEventArgs e)
-        {
-            TextBox question = (TextBox)sender;
-            if (question.Text == null)
-                return;
-            _session.Questions[lvQuestions.SelectedIndex].Question = question.Text;
-        }
-
-        private void tbQuestion_GotFocus(object sender, RoutedEventArgs e)
-        {
-            TextBox question = (TextBox)sender;
-            lvQuestions.SelectedIndex = lvQuestions.Items.IndexOf(question);
-        }
-
-        private void tbOption_LostFocus(object sender, RoutedEventArgs e)
-        {
-            TextBox option = (TextBox)sender;
-            if (option.Text == null)
-                return;
-            _session.Questions[lvQuestions.SelectedIndex].Options[lvOptions.SelectedIndex] = option.Text;
-        }
-
-        private void tbOption_GotFocus(object sender, RoutedEventArgs e)
-        {
-            TextBox option = (TextBox)sender;
-            lvOptions.SelectedIndex = lvOptions.Items.IndexOf(option);
-        }
-
-        private void ShowOptions(int questionIndex)
-        {
-            lvOptions.Items.Clear();
-            foreach(string? s in _session?.Questions?[questionIndex]?.Options)
-            {
+                _session?.Questions?.Add(new VotingQuestion());
                 TextBox tmp = new();
-                tmp.Text = s;
-                tmp.Width = 100;
+                tmp.Width = 300;
+                tmp.Height = 25;
+                tmp.GotFocus += tbQuestion_GotFocus;
+                tmp.LostFocus += tbQuestion_LostFocus;
+                lvQuestions.Items.Add(tmp);
+            }
+
+            // delete question from session
+            private void btnDeleteQuestion_Click(object sender, RoutedEventArgs e)
+            {
+                _session?.Questions?.RemoveAt(lvQuestions.SelectedIndex);
+                lvQuestions.Items.RemoveAt(lvQuestions.SelectedIndex);
+            }
+
+            // select question from list
+            private void lvQuestions_SelectionChanged(object sender, SelectionChangedEventArgs e)
+            {
+                if (lvQuestions.SelectedIndex != -1)
+                {
+                    btnDeleteQuestion.IsEnabled = true;
+                }
+                else
+                {
+                    btnDeleteQuestion.IsEnabled = false;
+                }
+            }
+
+            // add option to selected question
+            private void btnAddOption_Click(object sender, RoutedEventArgs e)
+            {
+                _session?.Questions?[lvQuestions.SelectedIndex]?.Options?.Add("");
+                TextBox tmp = new();
+                tmp.Width = 300;
+                tmp.Height = 25;
+                tmp.GotFocus += tbOption_GotFocus;
                 tmp.LostFocus += tbOption_LostFocus;
                 lvOptions.Items.Add(tmp);
             }
-        }
 
-        private void btnOptionGoBack_Click(object sender, RoutedEventArgs e)
-        {
-             gbQuestions.Visibility = Visibility.Visible;
-             gbOptions.Visibility = Visibility.Hidden;
-        }
-
-        private void btnGoBackToStart_Click(object sender, RoutedEventArgs e)
-        {
-            this.Visibility = Visibility.Collapsed;
-        }
-
-        private async void btnCreateSession_Click(object sender, RoutedEventArgs e)
-        {
-            if (tbSessionName.Text == string.Empty || tbSessionPassword.Text == string.Empty || tbCreatorName.Text == string.Empty)
+            // select option from selected question
+            private void lvOptions_SelectionChanged(object sender, SelectionChangedEventArgs e)
             {
-                ShowInformationMessage("Please fill out all forms!");
-                return;
+                if (lvOptions.SelectedIndex != -1)
+                {
+                    btnDeleteOption.IsEnabled = true;
+
+                }
+                else
+                {
+                    btnDeleteOption.IsEnabled = false;
+                }
             }
 
-            btnCreateSession.IsEnabled = false; // create session only once
-            try
+            // remove option from selected question
+            private void btnDeleteOption_Click(object sender, RoutedEventArgs e)
             {
-                _session.SessionTitle = tbSessionName.Text;
-                _session.Password = tbSessionPassword.Text;
-                _session.Creator.Name = tbCreatorName.Text;
+                _session?.Questions?[lvQuestions.SelectedIndex]?.Options?.RemoveAt(lvOptions.SelectedIndex);
+                lvOptions.Items.RemoveAt(lvOptions.SelectedIndex);
+            }
 
-                // Erstellen einer HttpClient-Instanz
-                using (HttpClient client = new HttpClient())
+            // set question if textboxed is left 
+            private void tbQuestion_LostFocus(object sender, RoutedEventArgs e)
+            {
+                TextBox question = (TextBox)sender;
+                if (question.Text == null || _session == null)
+                    return;
+
+                _session.Questions[lvQuestions.SelectedIndex].Question = question.Text;
+            }
+
+            // select question if textbox is clicked
+            private void tbQuestion_GotFocus(object sender, RoutedEventArgs e)
+            {
+                TextBox question = (TextBox)sender;
+                lvQuestions.SelectedIndex = lvQuestions.Items.IndexOf(question);
+            }
+
+            // set option if textbox is left
+            private void tbOption_LostFocus(object sender, RoutedEventArgs e)
+            {
+                TextBox option = (TextBox)sender;
+                if (option.Text == null)
+                    return;
+
+                _session.Questions[lvQuestions.SelectedIndex].Options[lvOptions.SelectedIndex] = option.Text;
+            }
+
+            // select option if textbox is clicked
+            private void tbOption_GotFocus(object sender, RoutedEventArgs e)
+            {
+                TextBox option = (TextBox)sender;
+                lvOptions.SelectedIndex = lvOptions.Items.IndexOf(option);
+            }
+
+            // show options for selected question
+            private void ShowOptions(int questionIndex)
+            {
+                lvOptions.Items.Clear();
+
+                foreach(string? s in _session.Questions[questionIndex].Options)
                 {
-                    // Senden der POST-Anfrage
-                    HttpResponseMessage response = await client.PostAsync("http://localhost:5000/api/session", new StringContent(JsonSerializer.Serialize(_session), Encoding.UTF8, "application/json"));
+                    TextBox tmp = new();
+                    tmp.Text = s;
+                    tmp.Width = 100;
+                    tmp.LostFocus += tbOption_LostFocus;
+                    lvOptions.Items.Add(tmp);
+                }
+            }
 
-                    // Überprüfen der Antwort auf Erfolg
+            // go back from options to questions
+            private void btnOptionGoBack_Click(object sender, RoutedEventArgs e)
+            {
+                 gbQuestions.Visibility = Visibility.Visible;
+                 gbOptions.Visibility = Visibility.Hidden;
+            }
+
+            // go back to start page
+            private void btnGoBackToStart_Click(object sender, RoutedEventArgs e)
+            {
+                this.Visibility = Visibility.Collapsed;
+            }
+
+            // create the voting session
+            private async void btnCreateSession_Click(object sender, RoutedEventArgs e)
+            {
+                // check if session information was filled out
+                if (tbSessionName.Text == string.Empty || tbCreatorName.Text == string.Empty)
+                {
+                    ShowInformationMessage("Please fill out all forms!");
+                    return;
+                }
+
+                btnCreateSession.IsEnabled = false; // create session only once
+                try
+                {
+                    _session.SessionTitle = tbSessionName.Text;
+                    _session.Creator = tbCreatorName.Text;
+
+                    HttpResponseMessage response = await HttpRequestHandler.SendHttpRequestAsync(RequestType.CreateSession, JsonSerializer.Serialize(new HttpPostRequest(_session, _user)), "");
+                
+                    // check if request was successful
                     if (response.IsSuccessStatusCode)
                     {
-                        MainFrame.Navigate(new SessionCodePage(JsonSerializer.Deserialize<VontingSessionIngress?>(response.Content.ReadAsStream()).SessionID));  
+                        MainFrame.Navigate(new StartPage(_user));  // navigate to start page
                     }
                     else
                     {
-                        ShowErrorMessage("Fehler! Statuscode: " + response.StatusCode);
-                        btnCreateSession.IsEnabled = true;
+                        ShowErrorMessage("Error! Statuscode: " + response.StatusCode);
                     }
                 }
-            }
-            catch (HttpRequestException hre)
+                catch (HttpRequestException)
+                {
+                    ShowErrorMessage("Server not reachable!");
+                }
+                catch (Exception ex)
+                {
+                    ShowErrorMessage(ex.Message);
+                }
+                finally
+                {
+                    btnCreateSession.IsEnabled = true;
+                }
+            } // HTTP - REQUEST
+
+            // show info message
+            private void ShowInformationMessage(string msg)
             {
-                ShowErrorMessage("Server nicht erreichbar!");
-                btnCreateSession.IsEnabled = true;
+                MessageBox.Show(msg, Assembly.GetEntryAssembly()?.GetName().Name, MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            catch (Exception ex)
+
+            // show error message
+            private void ShowErrorMessage(string msg)
             {
-                ShowErrorMessage(ex.Message);
-                btnCreateSession.IsEnabled = true;
+                MessageBox.Show(msg, Assembly.GetEntryAssembly()?.GetName().Name, MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
 
-        private void ShowInformationMessage(string msg)
-        {
-            MessageBox.Show(msg, System.Reflection.Assembly.GetEntryAssembly().GetName().Name, MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-
-        private void ShowErrorMessage(string msg)
-        {
-            MessageBox.Show(msg, System.Reflection.Assembly.GetEntryAssembly().GetName().Name, MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-
-        private void ListViewItem_DoubleClick(object sender, MouseEventArgs e)
-        {
-            gbQuestions.Visibility = Visibility.Hidden;
-            gbOptions.Visibility = Visibility.Visible;
-            ShowOptions(lvQuestions.SelectedIndex);
+            // show options if question is double clicked
+            private void ListViewItem_DoubleClick(object sender, MouseEventArgs e)
+            {
+                gbQuestions.Visibility = Visibility.Hidden;
+                gbOptions.Visibility = Visibility.Visible;
+                ShowOptions(lvQuestions.SelectedIndex);
+            }
         }
     }
-}

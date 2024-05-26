@@ -29,7 +29,6 @@ body {
 }
 
 .text-block {
-    background-color: #19D8D4CB;
     text-align: center;
     margin: 10px;
     padding: 0;
@@ -64,7 +63,7 @@ body {
     margin: 10px;
     font-family: "Showcard Gothic", sans-serif;
     background-color: #6646CA33;
-    border: none;
+    border: 1px solid black;
     cursor: pointer;
 }
 

@@ -1,20 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Reflection;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace VotingApp_Client_WPF
 {
@@ -23,43 +13,47 @@ namespace VotingApp_Client_WPF
     /// </summary>
     public partial class SessionFormPage : Page
     {
-        VontingSessionIngress _session;
+        VotingSessionIngress _session;
+        string? _sessionID;
         VotingPost _answers = new();
 
-        public SessionFormPage(VontingSessionIngress session)
+        public SessionFormPage(VotingSessionIngress session, string? sessionID)
         {
             InitializeComponent();
             _session = session;
+            _sessionID = sessionID;
+            lblCreatorName.Content = session.Creator;
+            lblSessionName.Content = session.Title;
+
+            // populate initial questions
+            _answers.Votes = new();
             PopulateQuestions();
         }
-
+        
+        // show options for selected question
         private void ShowOptions()
         {
-            foreach (var item in _session.Questions[lvQuestions.SelectedIndex].Options)
+            lbOptions.Items.Clear();
+            var options = _session.Questions[lvQuestions.SelectedIndex].Options;
+
+            foreach (   var item in options)
             {
-                Label option = new();
-                option.Width = 300;
-                option.Height = 25;
-                option.Content = item;
-
-                CheckBox checkbox = new CheckBox();
-                checkbox.Checked += cbOption_Checked;
-
-                StackPanel tmp = new();
-                tmp.Orientation = Orientation.Horizontal;
-                tmp.Children.Add(checkbox);
-                tmp.Children.Add(option);
-
-                lvOptions.Items.Add(tmp);
-
-                if (_answers.Votes[_session.Questions[lvQuestions.SelectedIndex].Options.IndexOf(item) + ""] == lvOptions.Items.Count)
+                CheckBox cb = new CheckBox();
+                cb.Content = item;
+                cb.Checked += cbOption_Checked;
+                lbOptions.Items.Add(cb);
+                if (_answers.Votes.ContainsKey(lvQuestions.SelectedIndex + ""))
                 {
-                    lvOptions.SelectedIndex = lvOptions.Items.Count;
-                    checkbox.IsChecked = true;
+                    if (_answers.Votes[lvQuestions.SelectedIndex + ""] == options.IndexOf(item))
+                    {
+                        lbOptions.SelectedIndex = options.IndexOf(item);
+                        cb.IsChecked = true;
+                    }
                 }
             }
         }
 
+        // populate question listbox
         private void PopulateQuestions()
         {
             foreach(var item in _session.Questions)
@@ -72,32 +66,36 @@ namespace VotingApp_Client_WPF
             }
         }
 
+        // select option if checkbox is checked
         private void cbOption_Checked(object sender, RoutedEventArgs e)
         {
-            lvOptions.SelectedIndex = lvOptions.Items.IndexOf(sender);
-            foreach(var item in lvOptions.Items)
+            lbOptions.SelectedIndex = lbOptions.Items.IndexOf(sender);
+            foreach(var item in lbOptions.Items)
             {
                 if (item != sender)
-                    ((item as StackPanel).Children[0] as CheckBox).IsChecked = false;
+                    (item as CheckBox).IsChecked = false;
             }
 
             if (_answers.Votes.ContainsKey(lvQuestions.SelectedIndex + ""))
-                _answers.Votes[lvQuestions.SelectedIndex + ""] = lvOptions.SelectedIndex;
+                _answers.Votes[lvQuestions.SelectedIndex + ""] = lbOptions.SelectedIndex;
             else
-                _answers.Votes.Add(lvQuestions.SelectedIndex + "", lvOptions.SelectedIndex);
+                _answers.Votes.Add(lvQuestions.SelectedIndex + "", lbOptions.SelectedIndex);
         }
 
+        // go back to start page
         private void btnGoBackToStart_Click(object sender, RoutedEventArgs e)
         {
             this.Visibility = Visibility.Collapsed;
         }
 
+        // close options
         private void btnOptionGoBack_Click(object sender, RoutedEventArgs e)
         {
             gbQuestions.Visibility = Visibility.Visible;
             gbOptions.Visibility = Visibility.Hidden;
         }
 
+        // send answers
         private async void btnFinish_Click(object sender, RoutedEventArgs e)
         {
             if(tbSurveyTaker.Text == string.Empty)
@@ -105,37 +103,31 @@ namespace VotingApp_Client_WPF
                 ShowInformationMessage("Please fill in survey taker data");
                 return;
             }
-
-            Voter voter = new();
-            voter.Name = tbSurveyTaker.Text;
-            _answers.Voter = voter;
+            _answers.Voter = tbSurveyTaker.Text;
        
             try
             {
-                // Erstellen einer HttpClient-Instanz
-                using (HttpClient client = new HttpClient())
-                {
-                    // Senden der POST-Anfrage
-                    HttpResponseMessage response = await client.PostAsync("http://localhost:5000/api/session/"+_session.SessionID+"/results", new StringContent(JsonSerializer.Serialize(_answers)));
+                // Senden der POST-Anfrage
+                HttpResponseMessage response = await HttpRequestHandler.SendHttpRequestAsync(RequestType.PostResults, JsonSerializer.Serialize(_answers), _sessionID);
 
-                    // Überprüfen der Antwort auf Erfolg
-                    if (response.IsSuccessStatusCode)
-                    {
-                        ShowInformationMessage("Your answers have been admitted");
-                        this.Visibility = Visibility.Collapsed;
-                    }
-                    else
-                    {
-                        ShowErrorMessage("Fehler! Statuscode: " + response.StatusCode);
-                    }
+                // Überprüfen der Antwort auf Erfolg
+                if (response.IsSuccessStatusCode)
+                {
+                    ShowInformationMessage("Your answers have been admitted");
+                    this.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    ShowErrorMessage("Fehler! Statuscode: " + response.StatusCode+response.ReasonPhrase);
                 }
             }
             catch (Exception ex)
             {
                 ShowErrorMessage(ex.Message);
             }
-        }
-
+        } // HTTP-REQUEST
+        
+        // switch to options if question double clicked
         private void ListViewItem_DoubleClick(object sender, MouseEventArgs e)
         {
             gbQuestions.Visibility = Visibility.Hidden;
@@ -145,12 +137,12 @@ namespace VotingApp_Client_WPF
 
         private void ShowInformationMessage(string msg)
         {
-            MessageBox.Show(msg, System.Reflection.Assembly.GetEntryAssembly().GetName().Name, MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show(msg, Assembly.GetEntryAssembly().GetName().Name, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void ShowErrorMessage(string msg)
         {
-            MessageBox.Show(msg, System.Reflection.Assembly.GetEntryAssembly().GetName().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show(msg, Assembly.GetEntryAssembly().GetName().Name, MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         private void lvQuestions_SelectionChanged(object sender, SelectionChangedEventArgs e)

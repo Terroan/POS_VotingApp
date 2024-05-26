@@ -7,39 +7,21 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="CreateSessionPage.xaml.cs">
+    <Compile Update="LoginPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="ResultPage.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="SessionCodePage.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="SessionFormPage.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="StartPage.xaml.cs">
+    <Compile Update="UpdateSessionPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="CreateSessionPage.xaml">
+    <Page Update="LoginPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="ResultPage.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="SessionCodePage.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="SessionFormPage.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="StartPage.xaml">
+    <Page Update="UpdateSessionPage.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

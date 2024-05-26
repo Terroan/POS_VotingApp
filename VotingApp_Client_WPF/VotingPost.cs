@@ -1,25 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace VotingApp_Client_WPF
 {
+    // container class for post request outgoing
     public class VotingPost
     {
-        private Voter? _voter;
+        private string? _voter;
         private Dictionary<string, int>? _votes;
 
         public VotingPost() { }
 
         [JsonPropertyName("voter")]
-        public Voter? Voter { get { return _voter; } set { _voter = value; } }
+        public string? Voter { get { return _voter; } set { _voter = value; } }
         [JsonPropertyName("votes")]
         public Dictionary<string, int>? Votes { get { return _votes; } set { _votes = value; } }
-
-
 
     }
 }

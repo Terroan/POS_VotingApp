@@ -2,18 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace VotingApp_Client_WPF
 {
@@ -22,62 +16,112 @@ namespace VotingApp_Client_WPF
     /// </summary>
     public partial class StartPage : Page
     {
-        public StartPage()
+        private VoterEgress _user;
+        private List<VotingSessionIngress?>? _sessions;
+        private bool isClick = false;
+        public StartPage(VoterEgress user)
         {
             InitializeComponent();
+            _user = user;
+            tbUser.Text = "User: " + _user.Name;
+            FetchUserSessions();
         }
 
-        //Switch to createSessionPage
-        private void btnCreateSession_Click(object sender, RoutedEventArgs e)
-        {
-            MainFrame.Navigate(new CreateSessionPage());
-        }
-
-        private void tbSessionCode_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (tbSessionCode.Text != string.Empty)
-                btnJoinSession.IsEnabled = true;
-            else
-                btnJoinSession.IsEnabled = false;
-
-        }
-
-        private async void btnJoinSession_Click(object sender, RoutedEventArgs e)
+        // get all sessions for the user
+        private async void FetchUserSessions()
         {
             try
             {
-                // Erstellen einer HttpClient-Instanz
-                using (HttpClient client = new HttpClient())
+                HttpResponseMessage response = await HttpRequestHandler.SendHttpRequestAsync(RequestType.FetchSessions, JsonSerializer.Serialize(_user), "");
+                if (response.IsSuccessStatusCode)
                 {
-                    // Senden der POST-Anfrage
-                    HttpResponseMessage response = await client.GetAsync("http://localhost:5000/api/session");
-
-                    // Überprüfen der Antwort auf Erfolg
-                    if (response.IsSuccessStatusCode)
+                    _sessions = JsonSerializer.Deserialize<List<VotingSessionIngress?>?>(response.Content.ReadAsStream());
+                    foreach(VotingSessionIngress? vs in _sessions)
                     {
-                        MainFrame.Navigate(new SessionFormPage(JsonSerializer.Deserialize<VontingSessionIngress?>(response.Content.ReadAsStream())));
+                        lbSessions.Items.Add(vs.Title == string.Empty || vs.Title == null ? "..." : vs.Title);
                     }
-                    else
-                    {
-                        ShowErrorMessage("Fehler! Statuscode: " + response.StatusCode);
-                    }
+                }
+                else
+                {
+                    ShowErrorMessage("Error! Statuscode: " + response.StatusCode);
                 }
             }
             catch (HttpRequestException hre)
             {
-                ShowErrorMessage("Server nicht erreichbar!");
+                ShowErrorMessage("Server is not reachable!");
+            }
+            catch (Exception ex)
+            {
+                ShowErrorMessage(ex.Message);
+            }
+        } // HTTP-REQUEST
+
+        // Switch to createSessionPage
+        private void btnCreateSession_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new CreateSessionPage(_user));
+        }
+
+        private void tbSessionCode_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (tbSessionCode.Text != string.Empty && !isClick)
+                btnJoinSession.IsEnabled = true;
+            else
+                btnJoinSession.IsEnabled = false;
+        }
+
+        private async void btnJoinSession_Click(object sender, RoutedEventArgs e)
+        {
+            btnJoinSession.IsEnabled = false;
+            isClick = true;
+            try
+            {
+                string sessionID = tbSessionCode.Text;
+                HttpResponseMessage response = await HttpRequestHandler.SendHttpRequestAsync(RequestType.FetchSession, "", sessionID);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    MainFrame.Navigate(new SessionFormPage(JsonSerializer.Deserialize<VotingSessionIngress>(response.Content.ReadAsStream()), sessionID.ToLower()));
+                }
+                else
+                {
+                    isClick = false;
+                    btnCreateSession.IsEnabled = true;
+                    btnJoinSession.IsEnabled = true;
+                    ShowErrorMessage("Error! Statuscode: " + response.StatusCode);
+                }
+            }
+            catch (HttpRequestException)
+            {
+                ShowErrorMessage("Server is not reachable!");
+                isClick = false;
+                btnJoinSession.IsEnabled = true;
                 btnCreateSession.IsEnabled = true;
             }
             catch (Exception ex)
             {
                 ShowErrorMessage(ex.Message);
+                isClick = false;
+                btnJoinSession.IsEnabled = true;
                 btnCreateSession.IsEnabled = true;
             }
-        }
+            finally
+            {
+                isClick = false;
+                btnJoinSession.IsEnabled = true;
+                btnCreateSession.IsEnabled = true;
+            }
+        } // HTTP-REQUEST
 
         private void ShowErrorMessage(string msg)
         {
-            MessageBox.Show(msg, System.Reflection.Assembly.GetEntryAssembly().GetName().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show(msg, Assembly.GetEntryAssembly().GetName().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+        // switch to update session page
+        private void ListBoxItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            MainFrame.Navigate(new UpdateSessionPage(_sessions[lbSessions.SelectedIndex], _user));
         }
     }
 }

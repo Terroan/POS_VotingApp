@@ -21,12 +21,12 @@ export class VotingQuestion {
       this._options = value;
     }
 
-        // Method to convert the object to JSON with custom property names
-        toJSON() {
-            return {
-                question: this._question,
-                options: this._options
-            };
-        }
+    // Method to convert the object to JSON with custom property names
+    toJSON() {
+        return {
+            question: this._question,
+            options: this._options
+        };
+    }
   }
   

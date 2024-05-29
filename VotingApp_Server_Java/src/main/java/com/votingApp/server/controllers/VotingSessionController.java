@@ -31,6 +31,12 @@ public class VotingSessionController {
 
     // ---------CRUD---------
 
+    // Return up to see if server is active
+    @GetMapping("status")
+    public ResponseEntity<String> health() {
+        return ResponseEntity.ok("UP");
+    }
+
     //Post (create) a new session
     @PostMapping("session")
     public ResponseEntity<String> createVotingSession(@RequestBody HttpPostRequest httpRequest) {
@@ -122,6 +128,7 @@ public class VotingSessionController {
         return ResponseEntity.ok(tmp);
     }
 
+    // Delete all sessions
     @DeleteMapping("sessions")
     public ResponseEntity<Long> deleteVotingSessions() {
         return ResponseEntity.ok(votingSessionService.deleteAll());

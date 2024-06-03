@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "U2WIdoyLrmHGFdCeDeuGCx00Z2dpw4by0dWbf25McOoOHeJkO7K53wimEwLe09BXSUSTdbfxQ3D175DYXIGRMA==",
+  "dgSpecHash": "xO7EzuYNQv0IuMUuFYS3TZNK923+M1sCEkUoOw8iyKIBA3d5kpbeeDClhFj+uwh/fmLgwnOZQBlFrczRA0NZYQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Daniel\\Desktop\\GitHubClones\\POS_VotingApp\\VotingApp_Client_WPF\\VotingApp_Client_WPF.csproj",
+  "projectFilePath": "C:\\Users\\Daniel\\Downloads\\VotingApp_Client_WPF\\VotingApp_Client_WPF.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Daniel\\.nuget\\packages\\livecharts\\0.9.7\\livecharts.0.9.7.nupkg.sha512",
     "C:\\Users\\Daniel\\.nuget\\packages\\livecharts.wpf\\0.9.7\\livecharts.wpf.0.9.7.nupkg.sha512"

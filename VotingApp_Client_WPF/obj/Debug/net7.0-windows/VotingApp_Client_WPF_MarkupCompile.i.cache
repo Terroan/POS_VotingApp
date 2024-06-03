@@ -4,7 +4,7 @@
 winexe
 C#
 .cs
-C:\Users\Daniel\Desktop\GitHubClones\POS_VotingApp\VotingApp_Client_WPF\obj\Debug\net7.0-windows\
+C:\Users\Daniel\Downloads\VotingApp_Client_WPF\obj\Debug\net7.0-windows\
 VotingApp_Client_WPF
 none
 false
@@ -12,7 +12,7 @@ TRACE;DEBUG;NET;NET7_0;NETCOREAPP
 
 8-1169458783
 
-24-544218105
+20-1875104993
 2001359871920
 CreateSessionPage.xaml;LoginPage.xaml;MainWindow.xaml;ResultPage.xaml;SessionCodePage.xaml;SessionFormPage.xaml;StartPage.xaml;UpdateSessionPage.xaml;
 

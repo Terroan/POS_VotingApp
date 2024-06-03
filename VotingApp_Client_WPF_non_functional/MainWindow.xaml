@@ -1,0 +1,8 @@
+﻿<Window x:Class="VotingApp_Client_WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="VotingApp" Background="#FFD27EB0" Height="650" Width="955">
+    <Grid>
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Visibility="Visible" Grid.Row="0"/>
+    </Grid>
+</Window>

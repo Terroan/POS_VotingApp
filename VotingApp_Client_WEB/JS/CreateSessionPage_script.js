@@ -1,3 +1,4 @@
+// Imports
 import { RequestType, HttpRequestHandler } from '/HttpRequestHandler.js';
 import { HttpPostRequest } from '/Models/HttpPostRequest.js'; 
 import { VotingQuestion } from '/Models/VotingQuestion.js'; 
@@ -7,6 +8,7 @@ var session = new VotingSessionEgress();
 var user = JSON.parse(localStorage.getItem('user'));
 var postRequest = new HttpPostRequest(session, user);
 
+// add question to session
 function btnAddQuestion_Click() {
     postRequest.VotingSession?.Questions?.push(new VotingQuestion());
     var tmp = document.createElement('input');
@@ -25,6 +27,7 @@ function btnAddQuestion_Click() {
     document.getElementById('lvQuestions').appendChild(tmp);
 }
 
+// delelte question from session
 function btnDeleteQuestion_Click() {
     var selectedIndex = document.getElementById('lvQuestions').selectedIndex;
     if (selectedIndex !== -1) {
@@ -33,16 +36,19 @@ function btnDeleteQuestion_Click() {
     }
 }
 
+// select question
 function lvQuestions_SelectionChanged() {
     var selectedIndex = document.getElementById('lvQuestions').selectedIndex;
     document.getElementById('btnDeleteQuestion').disabled = selectedIndex === -1;
 }
 
+// add option to selected question
 function btnAddOption_Click() {
     var selectedIndex = document.getElementById('lvQuestions').selectedIndex;
     if (selectedIndex !== -1) {
         postRequest.VotingSession.Questions[selectedIndex]?.Options?.push("");
         var tmp = document.createElement('input');
+        // add style to dynamical generated dom object
         tmp.type = 'text';
         tmp.style.width = '300px';
         tmp.style.height = '25px';
@@ -60,11 +66,13 @@ function btnAddOption_Click() {
     updateOptionButtonsState(); // Enable/disable option buttons after adding an option
 }
 
+// select option
 function lvOptions_SelectionChanged() {
     var selectedIndex = document.getElementById('lvOptions').selectedIndex;
     document.getElementById('btnDeleteOption').disabled = selectedIndex === -1;
 }
 
+// enable/disable buttons
 function updateOptionButtonsState() {
     var questionIndex = document.getElementById('lvQuestions').selectedIndex;
     var optionIndex = document.getElementById('lvOptions').selectedIndex;
@@ -77,6 +85,7 @@ function updateOptionButtonsState() {
     btnDeleteQuestion.disabled = questionIndex === -1; // Disable delete question if no question is selected
 }
 
+// remove option from selected question
 function btnDeleteOption_Click() {
     var selectedIndex = document.getElementById('lvOptions').selectedIndex;
     var questionIndex = document.getElementById('lvQuestions').selectedIndex;
@@ -87,6 +96,7 @@ function btnDeleteOption_Click() {
     updateOptionButtonsState(); // Enable/disable option buttons after removing an option
 }
 
+// update question
 function tbQuestion_LostFocus(event) {
     var question = event.target;
     if (question.value == null || postRequest.VotingSession == null)
@@ -95,11 +105,13 @@ function tbQuestion_LostFocus(event) {
     postRequest.VotingSession.Questions[document.getElementById('lvQuestions').selectedIndex].Question = question.value;
 }
 
+// select question if tb is entered
 function tbQuestion_GotFocus(event) {
     var question = event.target;
     document.getElementById('lvQuestions').selectedIndex = Array.from(question.parentNode.children).indexOf(question);
 }
 
+// update option
 function tbOption_LostFocus(event) {
     var option = event.target;
     if (option.value == null)
@@ -108,14 +120,16 @@ function tbOption_LostFocus(event) {
     postRequest.VotingSession.Questions[document.getElementById('lvQuestions').selectedIndex].Options[document.getElementById('lvOptions').selectedIndex] = option.value;
 }
 
+// select option if tb is entered
 function tbOption_GotFocus(event) {
     var option = event.target;
     document.getElementById('lvOptions').selectedIndex = Array.from(option.parentNode.children).indexOf(option);
 }
 
+// show option for selected question
 function ShowOptions(questionIndex) {
     var lvOptions = document.getElementById('lvOptions');
-    lvOptions.innerHTML = ''; // Liste leeren
+    lvOptions.innerHTML = '';
 
     postRequest.VotingSession.Questions[questionIndex]?.Options?.forEach(option => {
         var optionElement = document.createElement('input');
@@ -136,11 +150,12 @@ function ShowOptions(questionIndex) {
     });
 }
 
-
+// go back to start page
 function btnGoBackToStart_Click() {
     window.location.href = 'StartPage.html';
 }
 
+// send http request for posting a session
 async function btnCreateSession_Click() {
     var sessionName = document.getElementById('tbSessionName').value;
     var creatorName = document.getElementById('tbCreatorName').value;
@@ -155,7 +170,6 @@ async function btnCreateSession_Click() {
         postRequest.VotingSession.SessionTitle = sessionName;
         postRequest.VotingSession.Creator = creatorName;
 
-        console.log(postRequest);
         alert(JSON.stringify(postRequest));
         var response = await HttpRequestHandler.sendHttpRequestAsync(RequestType.CreateSession, JSON.stringify(postRequest), "");
         
@@ -172,6 +186,7 @@ async function btnCreateSession_Click() {
     }
 }
 
+// add event listeners
 window.onload = function () {
     document.getElementById('btnAddQuestion').addEventListener('click', btnAddQuestion_Click);
     document.getElementById('btnDeleteQuestion').addEventListener('click', btnDeleteQuestion_Click);

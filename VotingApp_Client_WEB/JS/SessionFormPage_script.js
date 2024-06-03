@@ -1,7 +1,8 @@
-// Import des HttpRequestHandler
+// Imports
 import { HttpRequestHandler, RequestType } from '/HttpRequestHandler.js';
 import { VotingPost } from '/Models/VotingPost.js';
 
+// load page
 window.onload = function() {
     var session = JSON.parse(localStorage.getItem('votingSession'));
     const sessionId = localStorage.getItem('sessionId');
@@ -43,15 +44,15 @@ window.onload = function() {
     session.questions.forEach((question, questionIndex) => {
         const questionLabel = document.createElement('label');
         questionLabel.textContent = question.question || "...";
-        questionLabel.style.display = 'block'; // Anzeigen der Fragen untereinander
+        questionLabel.style.display = 'block'; // show questions one below another
         questionsList.appendChild(questionLabel);
 
-        const optionsContainer = document.createElement('div'); // Container für die Optionen
+        const optionsContainer = document.createElement('div'); // Container for options
         question.options.forEach((option, optionIndex) => {
-            const optionContainer = document.createElement('div'); // Container für jede Option
+            const optionContainer = document.createElement('div'); // Container for each option
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
-            checkbox.name = `question_${questionIndex}`; // Eindeutiger Name für jede Frage
+            checkbox.name = `question_${questionIndex}`; // name for question
             checkbox.value = optionIndex;
             checkbox.style.marginRight = '5px';
             checkbox.addEventListener('change', function() {
@@ -63,9 +64,9 @@ window.onload = function() {
             optionLabel.textContent = option;
             optionContainer.appendChild(optionLabel);
 
-            optionsContainer.appendChild(optionContainer); // Hinzufügen der Option zum Container für die Optionen
+            optionsContainer.appendChild(optionContainer); // add option to option container
         });
-        questionsList.appendChild(optionsContainer); // Hinzufügen des Containers für die Optionen zum Fragen-Container
+        questionsList.appendChild(optionsContainer); // add option container to question container
     });
 
     // Go back to start page

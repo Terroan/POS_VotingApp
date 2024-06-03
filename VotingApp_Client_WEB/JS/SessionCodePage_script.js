@@ -1,5 +1,7 @@
+// Imports
 import { RequestType, HttpRequestHandler } from '/HttpRequestHandler.js';
 
+// load page
 window.onload = function () {
     const sessionCode = localStorage.getItem('sessionCode');
     const objectId = JSON.parse(localStorage.getItem('session')).id;
@@ -21,6 +23,7 @@ function initializePage(sessionCode, objectId, user) {
     document.getElementById('lblSessionID').textContent = sessionCode;
 }
 
+// end session
 async function btnEndSession_Click(objectId, user) {
     const btnEndSession = document.getElementById('btnEndSession');
     btnEndSession.disabled = true; //click only once

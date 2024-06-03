@@ -1,3 +1,4 @@
+// load page
 document.addEventListener('DOMContentLoaded', function() {
     const session = JSON.parse(localStorage.getItem('votingSession'));
     const user = JSON.parse(localStorage.getItem('user'));
@@ -36,6 +37,7 @@ function initializePage(session, user) {
     }
 }
 
+// count the votes from the http response
 function CountVotes(posts) {
     const voteSum = {};
     posts.forEach(post => {
@@ -52,6 +54,7 @@ function CountVotes(posts) {
     return voteSum;
 }
 
+// populate the question combobox
 function PopulateCombobox(session) {
     const cbQuestions = document.getElementById('cbQuestions');
     session.questions.forEach((question, index) => {
@@ -110,6 +113,7 @@ function FillDiagramm(questionIndex, session, votes) {
     });
 }
 
+// select a question
 function cbQuestions_SelectionChanged(event, session) {
     const selectedIndex = event.target.selectedIndex;
     document.getElementById('lblQuestion').textContent = session.questions[selectedIndex].question;

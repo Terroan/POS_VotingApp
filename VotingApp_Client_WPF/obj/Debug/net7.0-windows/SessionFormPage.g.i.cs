@@ -141,7 +141,7 @@ namespace VotingApp_Client_WPF {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/VotingApp_Client_WPF;component/sessionformpage.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/VotingApp_Client_WPF;V1.0.0.0;component/sessionformpage.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\SessionFormPage.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

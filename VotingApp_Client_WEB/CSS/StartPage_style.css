@@ -4,6 +4,7 @@ body {
     font-family: 'Showcard Gothic', sans-serif;
     background-color: #FFD27EB0;
 }
+
 #container {
     display: flex;
     flex-direction: column;
@@ -11,26 +12,31 @@ body {
     justify-content: center;
     height: 100vh;
 }
+
 #appTitle {
     font-size: 70px;
     background-color: #19D8D4CB;
     margin: 50px;
     padding: 10px;
 }
+
 #userSection {
     display: flex;
     margin-bottom: 50px;
 }
+
 #tbUser {
     font-size: 20px;
     margin: 30px;
     padding: 10px;
 }
+
 #sessionsText {
     font-size: 20px;
     margin: 10px;
     padding: 10px;
 }
+
 #lbSessions {
     width: 300px;
     background-color: #FFDCD267;
@@ -39,11 +45,13 @@ body {
     border: 1px solid #ccc; /* optional: Rahmen für die Liste */
     padding: 10px; /* optional: Innenabstand */
 }
+
 #buttons {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
 #btnCreateSession {
     font-family: 'Showcard Gothic', sans-serif;
     font-size: 25px;
@@ -75,6 +83,7 @@ body {
 .button:hover {
     opacity: 0.8;
 }
+
 #tbSessionCode {
     font-size: 35px;
     width: 235px;

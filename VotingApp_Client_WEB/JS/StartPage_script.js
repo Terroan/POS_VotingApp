@@ -1,6 +1,7 @@
+// Imports
 import { RequestType, HttpRequestHandler } from '/HttpRequestHandler.js';
 
-// Globale Variable für die Sitzungsliste
+// global variable for sessions
 var sessions = [];
 
 // Retrieve user object from localStorage

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Daniel\\Downloads\\VotingApp_Client_WPF\\VotingApp_Client_WPF.csproj": {}
+    "C:\\Users\\Daniel\\Desktop\\GitHubClones\\POS_VotingApp\\VotingApp_Client_WPF\\VotingApp_Client_WPF.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Daniel\\Downloads\\VotingApp_Client_WPF\\VotingApp_Client_WPF.csproj": {
+    "C:\\Users\\Daniel\\Desktop\\GitHubClones\\POS_VotingApp\\VotingApp_Client_WPF\\VotingApp_Client_WPF.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Daniel\\Downloads\\VotingApp_Client_WPF\\VotingApp_Client_WPF.csproj",
+        "projectUniqueName": "C:\\Users\\Daniel\\Desktop\\GitHubClones\\POS_VotingApp\\VotingApp_Client_WPF\\VotingApp_Client_WPF.csproj",
         "projectName": "VotingApp_Client_WPF",
-        "projectPath": "C:\\Users\\Daniel\\Downloads\\VotingApp_Client_WPF\\VotingApp_Client_WPF.csproj",
+        "projectPath": "C:\\Users\\Daniel\\Desktop\\GitHubClones\\POS_VotingApp\\VotingApp_Client_WPF\\VotingApp_Client_WPF.csproj",
         "packagesPath": "C:\\Users\\Daniel\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Daniel\\Downloads\\VotingApp_Client_WPF\\obj\\",
+        "outputPath": "C:\\Users\\Daniel\\Desktop\\GitHubClones\\POS_VotingApp\\VotingApp_Client_WPF\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\DevExpress 23.2\\Components\\Offline Packages",

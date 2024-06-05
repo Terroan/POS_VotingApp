@@ -172,7 +172,6 @@ classDiagram
 
 ```
 
-
 ## Softwaredesign
 The software itself comprises three areas:
 - **Client (C# and XAML)**

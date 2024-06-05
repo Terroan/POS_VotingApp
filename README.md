@@ -12,6 +12,166 @@ The voting app is a software that allows users to create a new or log into an ex
 
 If you were to, you could see it as fan project of **Kahoot.it**
 
+## Use Cases
+### 1. User Registration
+**Actors:** New User
+
+**Preconditions:** The user is not logged into an account.
+
+**Main Flow:**
+1. The user opens the app and fills out the registration form with necessary details (username and password).
+2. The user clicks the sign in button.
+4. The app validates the provided information.
+5. If the information is valid, the app creates a new user account and displays a confirmation message.
+
+**Postconditions:** A new user account is created, and the user is logged into the app.
+
+### 2. User Login
+**Actors:** Registered User
+
+**Preconditions:** The user has a registered account.
+
+**Main Flow:**
+1. The user opens the app and enters their username and password.
+2. The user clicks the login button.
+3. The app validates the login credentials.
+4. If the credentials are correct, the app logs the user in and displays the startpage.
+
+**Postconditions:** The user is logged into their account.
+
+### 3. Create Voting Session
+**Actors:** Registered User
+
+**Preconditions:** The user is logged into their account.
+
+**Main Flow:**
+1. The user selects the "Create Voting Session" option.
+2. The user enters the session title, creator, questions, and answer options.
+3. The user submits the session creation form.
+4. The app saves the session into the user's account.
+
+**Postconditions:** A new voting session is created and stored in the user's account.
+
+### 4. Join Voting Session
+**Actors:** Guest User
+
+**Preconditions:** The guest user has the session ID.
+
+**Main Flow:**
+1. The guest user opens the app, logs or signs in and enters the session ID.
+2. The guest user clicks the join button.
+3. The app validates the session ID.
+4. If the session ID is valid, the app displays the session questions.
+5. The guest user submits their answers to the questions.
+
+**Postconditions:** The guest user's answers are recorded in the session.
+
+### 5. Start Voting Session
+**Actors:** Registered User (Session Owner)
+
+**Preconditions:** The user is logged into their account and has created a session.
+
+**Main Flow:**
+1. The session owner selects the session they want to start from the startpage.
+2. The session owner selects the "Start" option.
+3. The app changes the session status to active.
+4. The app displays the session ID.
+
+**Postconditions:** The session is now active and can be joined by guest users.
+
+### 6. End Voting Session
+**Actors:** Registered User (Session Owner)
+
+**Preconditions:** The session is active.
+
+**Main Flow:**
+1. The session owner selects the "End Session" option.
+3. The app changes the session status to ended.
+4. The app collects and processes the results.
+5. The app removes the given answers from the stored session.
+6. The app displays the results visually to the session owner.
+
+**Postconditions:** The session is ended, and the results are displayed.
+
+### 8. Edit Voting Session
+**Actors:** Registered User (Session Owner)
+
+**Preconditions:** The session is created but not yet started.
+
+**Main Flow:**
+1. The session owner selects the session they want to edit from the startpage.
+2. The session owner updates the session details (title, questions, answer options).
+4. The session owner submits the changes.
+5. The app saves the updated session details and displays a confirmation message.
+
+**Postconditions:** The session is updated with new details.
+
+### 9. Delete Voting Session
+**Actors:** Registered User (Session Owner)
+
+**Preconditions:** The session is created.
+
+**Main Flow:**
+1. The session owner selects the session they want to delete from the startpage.
+2. The session owner selects the "Delete" option.
+3. The app deletes the session and displays a confirmation message.
+
+**Postconditions:** The session is deleted from the user's account.
+
+### Overview
+```mermaid
+%% Use Case Diagram for Voting App
+
+%% Define actors
+classDiagram
+    class NewUser {
+        "New User"
+    }
+    class RegisteredUser {
+        "Registered User"
+    }
+    class GuestUser {
+        "Guest User"
+    }
+
+%% Define use cases
+    class UC1 {
+        "User Registration"
+    }
+    class UC2 {
+        "User Login"
+    }
+    class UC3 {
+        "Create Voting Session"
+    }
+    class UC4 {
+        "Join Voting Session"
+    }
+    class UC5 {
+        "Start Voting Session"
+    }
+    class UC6 {
+        "End Voting Session"
+    }
+    class UC8 {
+        "Edit Voting Session"
+    }
+    class UC9 {
+        "Delete Voting Session"
+    }
+
+%% Define relationships
+    NewUser --|> UC1
+    RegisteredUser --|> UC2
+    RegisteredUser --|> UC3
+    GuestUser --|> UC4
+    RegisteredUser --|> UC5
+    RegisteredUser --|> UC6
+    RegisteredUser --|> UC8
+    RegisteredUser --|> UC9
+
+```
+
 
 ## Softwaredesign
 The software itself comprises three areas:

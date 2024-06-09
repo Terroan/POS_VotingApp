@@ -576,6 +576,7 @@ Possible HTTP status codes:
 - **HTTP 403** -> Forbidden
 - **HTTP 404** -> Not Found
 - **HTTP 405** -> Method Not Allowed
+- **HTTP 409** -> Conflict
 
 ### Dependencies
 In this section, I outline the key dependencies required for the Spring Boot application. Dependencies, usually declared in the **pom.xml** file, are essential libraries and frameworks that the application relies on to function correctly and efficiently. They provide critical functionalities such as database access, web services, security, and more. Understanding and managing these dependencies ensures that the application remains modular, maintainable, and up-to-date with the latest features and security patches. Below, I detail the primary dependencies integrated into the project and their specific roles within the application.

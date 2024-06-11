@@ -5,9 +5,7 @@ import com.votingApp.server.dtos.VotingPostDTO;
 import com.votingApp.server.dtos.VotingSessionExgressDTO;
 import com.votingApp.server.dtos.VotingSessionIngressDTO;
 import com.votingApp.server.services.IVotingSessionService;
-import com.votingApp.server.wrapper.HttpDeleteRequest;
 import com.votingApp.server.wrapper.HttpPostRequest;
-import com.votingApp.server.wrapper.HttpPutRequest;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +29,7 @@ public class VotingSessionController {
 
     // ---------CRUD---------
 
-    // Return up to see if server is active
+    // Return "up" to see if server is active
     @GetMapping("status")
     public ResponseEntity<String> health() {
         return ResponseEntity.ok("UP");

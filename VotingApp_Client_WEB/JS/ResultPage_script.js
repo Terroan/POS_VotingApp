@@ -74,7 +74,6 @@ function FillDiagramm(questionIndex, session, votes) {
     const question = session.questions[questionIndex];
     const labels = question.options.map(option => option.length > 20 ? option.substring(0, 20) + '...' : option);
     const chartValues = question.options.map((_, index) => (votes[questionIndex] && votes[questionIndex][index]) ? votes[questionIndex][index] : 0);
-    alert(chartValues);
 
     const ctx = document.getElementById('lvcChart').getContext('2d');
 

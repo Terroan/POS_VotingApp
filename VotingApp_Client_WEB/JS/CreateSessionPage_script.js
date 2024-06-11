@@ -170,7 +170,6 @@ async function btnCreateSession_Click() {
         postRequest.VotingSession.SessionTitle = sessionName;
         postRequest.VotingSession.Creator = creatorName;
 
-        alert(JSON.stringify(postRequest));
         var response = await HttpRequestHandler.sendHttpRequestAsync(RequestType.CreateSession, JSON.stringify(postRequest), "");
         
         if (response.ok) {

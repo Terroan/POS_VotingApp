@@ -9,6 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebMvc
 public class WebConfiguration implements WebMvcConfigurer {
 
+    // allow crud operations from every source
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")

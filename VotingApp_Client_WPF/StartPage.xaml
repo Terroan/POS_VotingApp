@@ -35,7 +35,7 @@
                         FontFamily="Showcard Gothic" 
                         VerticalAlignment="Stretch" 
                         Grid.Row="0" Margin="10"/>
-                    <ListBox x:Name="lbSessions" Background="#FFDCD267">
+                    <ListBox x:Name="lbSessions" Background="#FFDCD267" FontFamily="Showcard Gothic">
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="{x:Type ListBoxItem}">
                                 <EventSetter Event="MouseDoubleClick" Handler="ListBoxItem_MouseDoubleClick"/>
@@ -56,7 +56,9 @@
                            Margin="0,0,35,0" TextWrapping="Wrap" VerticalAlignment="Center" 
                            Background="#19D8D4CB" 
                            BorderBrush="Black"
-                           Width="200" Height="50" TextChanged="tbSessionCode_TextChanged" FontSize="35" FontWeight="Bold"/>
+                           Width="200" Height="50" 
+                           FontFamily="Showcard Gothic"
+                           TextChanged="tbSessionCode_TextChanged" FontSize="35" FontWeight="Bold"/>
 
                         <Button x:Name="btnJoinSession" Content="Join session" 
                           Width="113" Height="100" 

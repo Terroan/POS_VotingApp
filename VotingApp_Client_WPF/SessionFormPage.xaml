@@ -70,7 +70,6 @@
                          Background="#33EA0404" BorderBrush="#FF090A0E"/>
 
                 <TextBox x:Name="tbSurveyTaker"
-                         TextWrapping="Wrap" 
                          Text=""
                          Grid.Row="1" 
                          Grid.Column="1" 

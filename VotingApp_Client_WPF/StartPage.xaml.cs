@@ -37,7 +37,7 @@ namespace VotingApp_Client_WPF
                 {
                     _sessions = JsonSerializer.Deserialize<List<VotingSessionIngress?>?>(response.Content.ReadAsStream());
                     foreach(VotingSessionIngress? vs in _sessions)
-                    {
+                    {   
                         lbSessions.Items.Add(vs.Title == string.Empty || vs.Title == null ? "..." : vs.Title);
                     }
                 }
@@ -76,7 +76,7 @@ namespace VotingApp_Client_WPF
             isClick = true;
             try
             {
-                string sessionID = tbSessionCode.Text;
+                string sessionID = tbSessionCode.Text.ToLower();
                 HttpResponseMessage response = await HttpRequestHandler.SendHttpRequestAsync(RequestType.FetchSession, "", sessionID);
 
                 if (response.IsSuccessStatusCode)

@@ -273,33 +273,23 @@ namespace VotingApp_Client_WPF
                 _session.Title = tbSessionName.Text;
                 _session.Creator = tbCreatorName.Text;
 
-                // Erstellen einer HttpClient-Instanz
-                using (HttpClient client = new HttpClient())
+                HttpResponseMessage response = await HttpRequestHandler.SendHttpRequestAsync(RequestType.DeleteSession, JsonSerializer.Serialize(_user), _session.ObjectID);
+                // Überprüfen der Antwort auf Erfolg
+                if (response.IsSuccessStatusCode)
                 {
-                    // Senden der POST-Anfrage
-                    var request = new HttpRequestMessage
-                    {
-                        Method = HttpMethod.Delete,
-                        RequestUri = new Uri("http://localhost:5000/api/session/"+_session.ObjectID),
-                        Content = new StringContent(JsonSerializer.Serialize(_user), Encoding.UTF8, "application/json")
-                    };
-                    var response = await client.SendAsync(request);
-
-                    // Überprüfen der Antwort auf Erfolg
-                    if (response.IsSuccessStatusCode)
-                    {
-                        ShowInformationMessage("Session was deleted!");
-                        MainFrame.Navigate(new StartPage(_user));
-                    }
-                    else
-                    {
-                        ShowErrorMessage("Fehler! Statuscode: " + response.StatusCode);
-                        btnDeleteSession.IsEnabled = true;
-                    }
+                    ShowInformationMessage("Session was deleted!");
+                    MainFrame.Navigate(new StartPage(_user));
                 }
+                else
+                {
+                    ShowErrorMessage("Fehler! Statuscode: " + response.StatusCode);
+                    btnDeleteSession.IsEnabled = true;
+                }
+ 
             }
             catch (HttpRequestException hre)
             {
+                ShowErrorMessage(hre.Message);
                 ShowErrorMessage("Server nicht erreichbar!");
                 btnDeleteSession.IsEnabled = true;
             }
